@@ -55,7 +55,7 @@ public class DnsDiscovery implements PeerDiscovery {
             "dnsseed.jointsecurityarea.org",
             "dnsseed.clipcointools.com",
             "dnsseed.clipcoinpool.org",
-            "dnsseed.ltc.xurious.com",
+            "dnsseed.clip.xurious.com",
             "dnsseed.koin-project.com",
             "dnsseed.weminemnc.com",
     };

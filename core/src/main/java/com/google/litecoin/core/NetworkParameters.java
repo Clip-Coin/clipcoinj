@@ -142,22 +142,22 @@ public class NetworkParameters implements Serializable {
             interval = INTERVAL;
             targetTimespan = TARGET_TIMESPAN;
             proofOfWorkLimit = Utils.decodeCompactBits(0x1e0fffffL);
-            acceptableAddressCodes = new int[] { 48 };
+            acceptableAddressCodes = new int[] { 28 };
             dumpedPrivateKeyHeader = 128;
-            addressHeader = 48;
+            addressHeader = 28;
             if(type == 100) port = 10333;
-            else port = 9333;
+            else port = 2533;
             packetMagic = 0xfbc0b6db;
             genesisBlock.setDifficultyTarget(0x1e0ffff0L);
-            genesisBlock.setTime(1317972665L);
-            genesisBlock.setNonce(2084524493L);
-            genesisBlock.setMerkleRoot(new Sha256Hash("97ddfbbae6be97fd6cdf3e7ca13232a3afff2353e29badfab7f73011edd4ced9"));
+            genesisBlock.setTime(1650940669L);
+            genesisBlock.setNonce(2085351920L);
+            genesisBlock.setMerkleRoot(new Sha256Hash("0x7685eced17712f25d11863066b877b9f6bccf3647218940f0e1866f38d23e6c2"));
             id = ID_PRODNET;
-            subsidyDecreaseBlockCount = 840000;
+            subsidyDecreaseBlockCount = 620000;
             allowEmptyPeerChains = false;
             spendableCoinbaseDepth = 100;
             String genesisHash = genesisBlock.getHashAsString();
-            checkState(genesisHash.equals("12a765e31ffd4059bada1e25190f6e98c99d9714d334efa41a195a7e7e04bfe2"),
+            checkState(genesisHash.equals("9c083da19ff725bff76d2dc54217fa74094f743df0aad61492127b1658352ef4"),
                     genesisHash);
 
             // This contains (at a minimum) the blocks which are not BIP30 compliant. BIP30 changed how duplicate
@@ -178,7 +178,7 @@ public class NetworkParameters implements Serializable {
             interval = INTERVAL;
             targetTimespan = TARGET_TIMESPAN;
             proofOfWorkLimit = Utils.decodeCompactBits(0x1d00ffffL);
-            port = 19333;
+            port = 12533;
             addressHeader = 111;
             acceptableAddressCodes = new int[] { 111 };
             dumpedPrivateKeyHeader = 239;
@@ -239,13 +239,13 @@ public class NetworkParameters implements Serializable {
         try {
             // A script containing the difficulty bits and the following message:
             //
-            //   "The Times 03/Jan/2009 Chancellor on brink of second bailout for banks"
+            //   "BBC NEWS 25/Apr/2022 Elon Musk agrees to buy Twitter for $44 billion"
             byte[] bytes = Hex.decode
-                    ("04b217bb4e022309");
+                    ("04ffff001d010442424243204e4557532032352f4170722f3230323220456c6f6e204d75736b2061677265657320746f20627579205477697474657220666f7220342062696c6c696f6e");
             t.addInput(new TransactionInput(n, t, bytes));
             ByteArrayOutputStream scriptPubKeyBytes = new ByteArrayOutputStream();
             Script.writeBytes(scriptPubKeyBytes, Hex.decode
-                    ("41044870341873accab7600d65e204bb4ae47c43d20c562ebfbf70cbcb188da98dec8b5ccf0526c8e4d954c6b47b898cc30adf1ff77c2e518ddc9785b87ccb90b8cdac"));
+                    ("0486545a822d7651f9a11215c26df2219e993a639acaa247be3e74f57d20a7b278a704e57c174a00d6280be32bafd1f4fd223ff0641f81e8e20a181a2672dcf22f"));
             scriptPubKeyBytes.write(Script.OP_CHECKSIG);
             t.addOutput(new TransactionOutput(n, t, Utils.toNanoCoins(50, 0), scriptPubKeyBytes.toByteArray()));
         } catch (Exception e) {
@@ -279,8 +279,8 @@ public class NetworkParameters implements Serializable {
         return genesisBlock;
     }
 
-    public static final int TARGET_TIMESPAN = (int)(3.5 * 24 * 60 * 60);  // 3.5 days per difficulty cycle, on average.
-    public static final int TARGET_SPACING = (int)(2.5 * 60);  // 2.5 minutes per block.
+    public static final int TARGET_TIMESPAN = (int)(3 * 24 * 60 * 60);  // 3 days per difficulty cycle, on average.
+    public static final int TARGET_SPACING = (int)(2 * 60);  // 2.5 minutes per block.
     public static final int INTERVAL = TARGET_TIMESPAN / TARGET_SPACING;
     
     /**
@@ -293,7 +293,7 @@ public class NetworkParameters implements Serializable {
     /**
      * The maximum money to be generated
      */
-    public static final BigInteger MAX_MONEY = new BigInteger("84000000", 10).multiply(COIN);
+    public static final BigInteger MAX_MONEY = new BigInteger("62000000", 10).multiply(COIN);
 
     /** Returns whatever the latest testNet parameters are.  Use this rather than the versioned equivalents. */
     public static NetworkParameters testNet() {
