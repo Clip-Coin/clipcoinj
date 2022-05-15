@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
 /**
  * The verack message, sent by a client accepting the version message they
@@ -25,7 +25,7 @@ public class VersionAck extends EmptyMessage {
 
     }
 
-    // this is needed by the LitecoinSerializer
+    // this is needed by the ClipcoinSerializer
     public VersionAck(NetworkParameters params, byte[] payload) {
 
     }

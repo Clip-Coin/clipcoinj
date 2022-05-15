@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
 /**
  * <p>Represents the "inv" P2P network message. An inv contains a list of hashes of either blocks or transactions. It's
@@ -32,7 +32,7 @@ public class InventoryMessage extends ListMessage {
     /**
      * Deserializes an 'inv' message.
      * @param params NetworkParameters object.
-     * @param msg Litecoin protocol formatted byte array containing message content.
+     * @param msg Clipcoin protocol formatted byte array containing message content.
      * @param parseLazy Whether to perform a full parse immediately or delay until a read is requested.
      * @param parseRetain Whether to retain the backing byte array for quick reserialization.  
      * If true and the backing byte array is invalidated due to modification of a field then 

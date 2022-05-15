@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
-import com.google.litecoin.core.Wallet.BalanceType;
-import com.google.litecoin.store.BlockStore;
-import com.google.litecoin.store.MemoryBlockStore;
-import com.google.litecoin.utils.BriefLogFormatter;
+import com.google.clipcoin.core.Wallet.BalanceType;
+import com.google.clipcoin.store.BlockStore;
+import com.google.clipcoin.store.MemoryBlockStore;
+import com.google.clipcoin.utils.BriefLogFormatter;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,8 +27,8 @@ import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static com.google.litecoin.core.TestUtils.createFakeBlock;
-import static com.google.litecoin.core.TestUtils.createFakeTx;
+import static com.google.clipcoin.core.TestUtils.createFakeBlock;
+import static com.google.clipcoin.core.TestUtils.createFakeTx;
 import static org.junit.Assert.*;
 
 // Handling of chain splits/reorgs are in ChainSplitTests.

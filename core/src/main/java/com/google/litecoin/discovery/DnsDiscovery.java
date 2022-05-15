@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.discovery;
+package com.google.clipcoin.discovery;
 
-import com.google.litecoin.core.NetworkParameters;
+import com.google.clipcoin.core.NetworkParameters;
 import com.google.common.collect.Sets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,8 +53,8 @@ public class DnsDiscovery implements PeerDiscovery {
 
     public static final String[] defaultHosts = new String[]{
             "dnsseed.jointsecurityarea.org",
-            "dnsseed.litecointools.com",
-            "dnsseed.litecoinpool.org",
+            "dnsseed.clipcointools.com",
+            "dnsseed.clipcoinpool.org",
             "dnsseed.ltc.xurious.com",
             "dnsseed.koin-project.com",
             "dnsseed.weminemnc.com",

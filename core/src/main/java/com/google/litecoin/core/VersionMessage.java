@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -73,9 +73,9 @@ public class VersionMessage extends Message {
     public boolean relayTxesBeforeFilter;
 
     /** The version of this library release, as a string. */
-    public static final String LITECOINJ_VERSION = "0.8-SNAPSHOT";
+    public static final String CLIPCOINJ_VERSION = "0.8-SNAPSHOT";
     /** The value that is prepended to the subVer field of this application. */
-    public static final String LIBRARY_SUBVER = "/LitecoinJ:" + LITECOINJ_VERSION + "/";
+    public static final String LIBRARY_SUBVER = "/ClipcoinJ:" + CLIPCOINJ_VERSION + "/";
 
     public VersionMessage(NetworkParameters params, byte[] msg) throws ProtocolException {
         super(params, msg, 0);
@@ -160,7 +160,7 @@ public class VersionMessage extends Message {
     }
 
     @Override
-    public void litecoinSerializeToStream(OutputStream buf) throws IOException {
+    public void clipcoinSerializeToStream(OutputStream buf) throws IOException {
         Utils.uint32ToByteStreamLE(clientVersion, buf);
         Utils.uint32ToByteStreamLE(localServices, buf);
         Utils.uint32ToByteStreamLE(localServices >> 32, buf);
@@ -168,9 +168,9 @@ public class VersionMessage extends Message {
         Utils.uint32ToByteStreamLE(time >> 32, buf);
         try {
             // My address.
-            myAddr.litecoinSerialize(buf);
+            myAddr.clipcoinSerialize(buf);
             // Their address.
-            theirAddr.litecoinSerialize(buf);
+            theirAddr.clipcoinSerialize(buf);
         } catch (UnknownHostException e) {
             throw new RuntimeException(e);  // Can't happen.
         } catch (IOException e) {
@@ -260,8 +260,8 @@ public class VersionMessage extends Message {
 
     /**
      * Appends the given user-agent information to the subVer field. The subVer is composed of a series of
-     * name:version pairs separated by slashes in the form of a path. For example a typical subVer field for LitecoinJ
-     * users might look like "/LitecoinJ:0.4-SNAPSHOT/MultiBit:1.2/" where libraries come further to the left.<p>
+     * name:version pairs separated by slashes in the form of a path. For example a typical subVer field for ClipcoinJ
+     * users might look like "/ClipcoinJ:0.4-SNAPSHOT/MultiBit:1.2/" where libraries come further to the left.<p>
      *
      * There can be as many components as you feel a need for, and the version string can be anything, but it is
      * recommended to use A.B.C where A = major, B = minor and C = revision for software releases, and dates for
@@ -270,10 +270,10 @@ public class VersionMessage extends Message {
      *
      * Anything put in the "comments" field will appear in brackets and may be used for platform info, or anything
      * else. For example, calling <tt>appendToSubVer("MultiBit", "1.0", "Windows")</tt> will result in a subVer being
-     * set of "/LitecoinJ:1.0/MultiBit:1.0(Windows)/. Therefore the / ( and ) characters are reserved in all these
+     * set of "/ClipcoinJ:1.0/MultiBit:1.0(Windows)/. Therefore the / ( and ) characters are reserved in all these
      * components. If you don't want to add a comment (recommended), pass null.<p>
      *
-     * See <a href="https://en.litecoin.it/wiki/BIP_0014">BIP 14</a> for more information.
+     * See <a href="https://en.clipcoin.it/wiki/BIP_0014">BIP 14</a> for more information.
      *
      * @param comments Optional (can be null) platform or other node specific information.
      * @throws IllegalArgumentException if name, version or comments contains invalid characters.

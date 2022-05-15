@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.examples;
+package com.google.clipcoin.examples;
 
-import com.google.litecoin.core.*;
-import com.google.litecoin.store.MemoryBlockStore;
+import com.google.clipcoin.core.*;
+import com.google.clipcoin.store.MemoryBlockStore;
 
 import java.math.BigInteger;
 import java.net.InetAddress;
@@ -25,7 +25,7 @@ import java.net.InetAddress;
 /**
  * This example shows how to solve the challenge Hal posted here:<p>
  *
- * <a href="http://www.litecoin.org/smf/index.php?topic=3638.0">http://www.litecoin.org/smf/index.php?topic=3638
+ * <a href="http://www.clipcoin.org/smf/index.php?topic=3638.0">http://www.clipcoin.org/smf/index.php?topic=3638
  * .0</a><p>
  *
  * in which a private key with some coins associated with it is published. The goal is to import the private key,
@@ -36,7 +36,7 @@ public class PrivateKeys {
         // TODO: Assumes production network not testnet. Make it selectable.
         NetworkParameters params = NetworkParameters.prodNet();
         try {
-            // Decode the private key from Satoshis Base58 variant. If 51 characters long then it's from Litecoins
+            // Decode the private key from Satoshis Base58 variant. If 51 characters long then it's from Clipcoins
             // dumpprivkey command and includes a version byte and checksum. Otherwise assume it's a raw key.
             ECKey key;
             if (args[0].length() == 51) {
@@ -65,7 +65,7 @@ public class PrivateKeys {
             peerGroup.stop();
 
             // And take them!
-            System.out.println("Claiming " + Utils.litecoinValueToFriendlyString(wallet.getBalance()) + " coins");
+            System.out.println("Claiming " + Utils.clipcoinValueToFriendlyString(wallet.getBalance()) + " coins");
             wallet.sendCoins(peerGroup, destination, wallet.getBalance());
             // Wait a few seconds to let the packets flush out to the network (ugly).
             Thread.sleep(5000);

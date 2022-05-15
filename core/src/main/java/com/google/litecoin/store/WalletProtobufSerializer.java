@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.store;
+package com.google.clipcoin.store;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,27 +24,27 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.*;
 
-import org.litecoinj.wallet.Protos;
-import org.litecoinj.wallet.Protos.Wallet.EncryptionType;
+import org.clipcoinj.wallet.Protos;
+import org.clipcoinj.wallet.Protos.Wallet.EncryptionType;
 
-import com.google.litecoin.crypto.EncryptedPrivateKey;
-import com.google.litecoin.crypto.KeyCrypter;
-import com.google.litecoin.crypto.KeyCrypterScrypt;
+import com.google.clipcoin.crypto.EncryptedPrivateKey;
+import com.google.clipcoin.crypto.KeyCrypter;
+import com.google.clipcoin.crypto.KeyCrypterScrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.litecoin.core.ECKey;
-import com.google.litecoin.core.NetworkParameters;
-import com.google.litecoin.core.PeerAddress;
-import com.google.litecoin.core.Sha256Hash;
-import com.google.litecoin.core.Transaction;
-import com.google.litecoin.core.TransactionConfidence;
-import com.google.litecoin.core.TransactionConfidence.ConfidenceType;
-import com.google.litecoin.core.TransactionInput;
-import com.google.litecoin.core.TransactionOutPoint;
-import com.google.litecoin.core.TransactionOutput;
-import com.google.litecoin.core.Wallet;
-import com.google.litecoin.core.WalletTransaction;
+import com.google.clipcoin.core.ECKey;
+import com.google.clipcoin.core.NetworkParameters;
+import com.google.clipcoin.core.PeerAddress;
+import com.google.clipcoin.core.Sha256Hash;
+import com.google.clipcoin.core.Transaction;
+import com.google.clipcoin.core.TransactionConfidence;
+import com.google.clipcoin.core.TransactionConfidence.ConfidenceType;
+import com.google.clipcoin.core.TransactionInput;
+import com.google.clipcoin.core.TransactionOutPoint;
+import com.google.clipcoin.core.TransactionOutput;
+import com.google.clipcoin.core.Wallet;
+import com.google.clipcoin.core.WalletTransaction;
 import com.google.common.base.Preconditions;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.TextFormat;
@@ -55,7 +55,7 @@ import com.google.protobuf.TextFormat;
  * a data interchange format developed by Google with an efficient binary representation, a type safe specification
  * language and compilers that generate code to work with those data structures for many languages. Protocol buffers
  * can have their format evolved over time: conceptually they represent data using (tag, length, value) tuples. The
- * format is defined by the <tt>litecoin.proto</tt> file in the litecoinj source distribution.<p>
+ * format is defined by the <tt>clipcoin.proto</tt> file in the clipcoinj source distribution.<p>
  *
  * This class is used through its static methods. The most common operations are writeWallet and readWallet, which do
  * the obvious operations on Output/InputStreams. You can use a {@link java.io.ByteArrayInputStream} and equivalent
@@ -447,7 +447,7 @@ public class WalletProtobufSerializer {
         txMap.put(txProto.getHash(), tx);
     }
 
-    protected WalletTransaction connectTransactionOutputs(org.litecoinj.wallet.Protos.Transaction txProto) {
+    protected WalletTransaction connectTransactionOutputs(org.clipcoinj.wallet.Protos.Transaction txProto) {
         Transaction tx = txMap.get(txProto.getHash());
         WalletTransaction.Pool pool = WalletTransaction.Pool.valueOf(txProto.getPool().getNumber());
         for (int i = 0 ; i < tx.getOutputs().size() ; i++) {

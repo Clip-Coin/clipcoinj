@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
 import com.google.common.base.Objects;
 import org.spongycastle.util.encoders.Hex;
@@ -25,13 +25,13 @@ import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.google.litecoin.core.Utils.COIN;
+import static com.google.clipcoin.core.Utils.COIN;
 import static com.google.common.base.Preconditions.checkState;
 
 /**
- * <p>NetworkParameters contains the data needed for working with an instantiation of a Litecoin chain.</p>
+ * <p>NetworkParameters contains the data needed for working with an instantiation of a Clipcoin chain.</p>
  *
- * Currently there are only two, the production chain and the test chain. But in future as Litecoin
+ * Currently there are only two, the production chain and the test chain. But in future as Clipcoin
  * evolves there may be more. You can create your own as long as they don't conflict.
  */
 public class NetworkParameters implements Serializable {
@@ -48,11 +48,11 @@ public class NetworkParameters implements Serializable {
     public static final byte[] SATOSHI_KEY = Hex.decode("04fc9702847840aaf195de8442ebecedf5b095cdbb9bc716bda9110971b28a49e0ead8564ff0db22209e0374782c093bb899692d524e9d6a6956e7c5ecbcd68284");
 
     /** The string returned by getId() for the main, production network where people trade things. */
-    public static final String ID_PRODNET = "org.litecoin.production";
+    public static final String ID_PRODNET = "org.clipcoin.production";
     /** The string returned by getId() for the testnet. */
-    public static final String ID_TESTNET = "org.litecoin.test";
+    public static final String ID_TESTNET = "org.clipcoin.test";
     /** Unit test network. */
-    static final String ID_UNITTESTNET = "com.google.litecoin.unittest";
+    static final String ID_UNITTESTNET = "com.google.clipcoin.unittest";
 
     // TODO: Seed nodes should be here as well.
 
@@ -61,7 +61,7 @@ public class NetworkParameters implements Serializable {
     /**
      * <p>Genesis block for this chain.</p>
      *
-     * <p>The first block in every chain is a well known constant shared between all Litecoin implemenetations. For a
+     * <p>The first block in every chain is a well known constant shared between all Clipcoin implemenetations. For a
      * block to be valid, it must be eventually possible to work backwards to the genesis block by following the
      * prevBlockHash pointers in the block headers.</p>
      *
@@ -84,12 +84,12 @@ public class NetworkParameters implements Serializable {
     public final int addressHeader;
     /** First byte of a base58 encoded dumped private key. See {@link DumpedPrivateKey}. */
     public final int dumpedPrivateKeyHeader;
-    /** How many blocks pass between difficulty adjustment periods. Litecoin standardises this to be 2015. */
+    /** How many blocks pass between difficulty adjustment periods. Clipcoin standardises this to be 2015. */
     public /*final*/ int interval;
     /**
      * How much time in seconds is supposed to pass between "interval" blocks. If the actual elapsed time is
      * significantly different from this value, the network difficulty formula will produce a different value. Both
-     * test and production Litecoin networks use 2 weeks (1209600 seconds).
+     * test and production Clipcoin networks use 2 weeks (1209600 seconds).
      */
     public final int targetTimespan;
     /**
@@ -317,7 +317,7 @@ public class NetworkParameters implements Serializable {
     }
 
     private static NetworkParameters pn;
-    /** The primary Litecoin chain created by Satoshi. */
+    /** The primary Clipcoin chain created by Satoshi. */
     public synchronized static NetworkParameters prodNet() {
         if (pn == null) {
             pn = new NetworkParameters(0);
@@ -326,7 +326,7 @@ public class NetworkParameters implements Serializable {
     }
 
     private static NetworkParameters pnh;
-    /** The primary Litecoin chain created by Hank. */
+    /** The primary Clipcoin chain created by Hank. */
     public synchronized static NetworkParameters prodNetHank() {
         if (pnh == null) {
             pnh = new NetworkParameters(100);

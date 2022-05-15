@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +26,7 @@ import java.util.Arrays;
 import static com.google.common.base.Preconditions.checkState;
 
 /**
- * <p>A Message is a data structure that can be serialized/deserialized using both the Litecoin proprietary serialization
+ * <p>A Message is a data structure that can be serialized/deserialized using both the Clipcoin proprietary serialization
  * format and built-in Java object serialization. Specific types of messages that are used both in the block chain,
  * and on the wire, are derived from this class.</p>
  */
@@ -87,9 +87,9 @@ public abstract class Message implements Serializable {
     /**
      * 
      * @param params NetworkParameters object.
-     * @param msg Litecoin protocol formatted byte array containing message content.
+     * @param msg Clipcoin protocol formatted byte array containing message content.
      * @param offset The location of the first msg byte within the array.
-     * @param protocolVersion Litecoin protocol version.
+     * @param protocolVersion Clipcoin protocol version.
      * @param parseLazy Whether to perform a full parse immediately or delay until a read is requested.
      * @param parseRetain Whether to retain the backing byte array for quick reserialization.  
      * If true and the backing byte array is invalidated due to modification of a field then 
@@ -134,7 +134,7 @@ public abstract class Message implements Serializable {
             maybeParse();
             byte[] msgbytes = new byte[cursor - offset];
             System.arraycopy(msg, offset, msgbytes, 0, cursor - offset);
-            byte[] reserialized = litecoinSerialize();
+            byte[] reserialized = clipcoinSerialize();
             if (!Arrays.equals(reserialized, msgbytes))
                 throw new RuntimeException("Serialization is wrong: \n" +
                         Utils.bytesToHexString(reserialized) + " vs \n" +
@@ -150,7 +150,7 @@ public abstract class Message implements Serializable {
         this(params, msg, offset, NetworkParameters.PROTOCOL_VERSION, parseLazy, parseRetain, length);
     }
 
-    // These methods handle the serialization/deserialization using the custom Litecoin protocol.
+    // These methods handle the serialization/deserialization using the custom Clipcoin protocol.
     // It's somewhat painful to work with in Java, so some of these objects support a second 
     // serialization mechanism - the standard Java serialization system. This is used when things 
     // are serialized to the wallet.
@@ -257,7 +257,7 @@ public abstract class Message implements Serializable {
     }
 
     /**
-     * Should only used by LitecoinSerializer for cached checksum
+     * Should only used by ClipcoinSerializer for cached checksum
      *
      * @return the checksum
      */
@@ -266,7 +266,7 @@ public abstract class Message implements Serializable {
     }
 
     /**
-     * Should only used by LitecoinSerializer for caching checksum
+     * Should only used by ClipcoinSerializer for caching checksum
      *
      * @param checksum the checksum to set
      */
@@ -277,20 +277,20 @@ public abstract class Message implements Serializable {
     }
 
     /**
-     * Returns a copy of the array returned by {@link Message#unsafeLitecoinSerialize()}, which is safe to mutate.
+     * Returns a copy of the array returned by {@link Message#unsafeClipcoinSerialize()}, which is safe to mutate.
      * If you need extra performance and can guarantee you won't write to the array, you can use the unsafe version.
      *
      * @return a freshly allocated serialized byte array
      */
-    public byte[] litecoinSerialize() {
-        byte[] bytes = unsafeLitecoinSerialize();
+    public byte[] clipcoinSerialize() {
+        byte[] bytes = unsafeClipcoinSerialize();
         byte[] copy = new byte[bytes.length];
         System.arraycopy(bytes, 0, copy, 0, bytes.length);
         return copy;
     }
 
     /**
-     * Serialize this message to a byte array that conforms to the litecoin wire protocol.
+     * Serialize this message to a byte array that conforms to the clipcoin wire protocol.
      * <br/>
      * This method may return the original byte array used to construct this message if the
      * following conditions are met:
@@ -306,7 +306,7 @@ public abstract class Message implements Serializable {
      *
      * @return a byte array owned by this object, do NOT mutate it.
      */
-    public byte[] unsafeLitecoinSerialize() {
+    public byte[] unsafeClipcoinSerialize() {
         // 1st attempt to use a cached array.
         if (bytes != null) {
             if (offset == 0 && length == bytes.length) {
@@ -323,7 +323,7 @@ public abstract class Message implements Serializable {
         // No cached array available so serialize parts by stream.
         ByteArrayOutputStream stream = new UnsafeByteArrayOutputStream(length < 32 ? 32 : length + 32);
         try {
-            litecoinSerializeToStream(stream);
+            clipcoinSerializeToStream(stream);
         } catch (IOException e) {
             // Cannot happen, we are serializing to a memory stream.
         }
@@ -335,7 +335,7 @@ public abstract class Message implements Serializable {
             // This give a dual benefit.  Releasing references to the larger byte array so that it
             // it is more likely to be GC'd.  And preventing double serializations.  E.g. calculating
             // merkle root calls this method.  It is will frequently happen prior to serializing the block
-            // which means another call to litecoinSerialize is coming.  If we didn't recache then internal
+            // which means another call to clipcoinSerialize is coming.  If we didn't recache then internal
             // serialization would occur a 2nd time and every subsequent time the message is serialized.
             bytes = stream.toByteArray();
             cursor = cursor - offset;
@@ -353,31 +353,31 @@ public abstract class Message implements Serializable {
     }
 
     /**
-     * Serialize this message to the provided OutputStream using the litecoin wire format.
+     * Serialize this message to the provided OutputStream using the clipcoin wire format.
      *
      * @param stream
      * @throws IOException
      */
-    final public void litecoinSerialize(OutputStream stream) throws IOException {
+    final public void clipcoinSerialize(OutputStream stream) throws IOException {
         // 1st check for cached bytes.
         if (bytes != null && length != UNKNOWN_LENGTH) {
             stream.write(bytes, offset, length);
             return;
         }
 
-        litecoinSerializeToStream(stream);
+        clipcoinSerializeToStream(stream);
     }
 
     /**
-     * Serializes this message to the provided stream. If you just want the raw bytes use litecoinSerialize().
+     * Serializes this message to the provided stream. If you just want the raw bytes use clipcoinSerialize().
      */
-    void litecoinSerializeToStream(OutputStream stream) throws IOException {
-        log.debug("Warning: {} class has not implemented litecoinSerializeToStream method.  Generating message with no payload", getClass());
+    void clipcoinSerializeToStream(OutputStream stream) throws IOException {
+        log.debug("Warning: {} class has not implemented clipcoinSerializeToStream method.  Generating message with no payload", getClass());
     }
 
     /**
      * This method is a NOP for all classes except Block and Transaction.  It is only declared in Message
-     * so LitecoinSerializer can avoid 2 instanceof checks + a casting.
+     * so ClipcoinSerializer can avoid 2 instanceof checks + a casting.
      *
      * @return
      */

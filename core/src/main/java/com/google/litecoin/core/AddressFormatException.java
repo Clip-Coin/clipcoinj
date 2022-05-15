@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
 @SuppressWarnings("serial")
 public class AddressFormatException extends Exception {

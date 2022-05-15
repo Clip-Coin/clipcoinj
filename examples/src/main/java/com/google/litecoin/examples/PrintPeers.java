@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.examples;
+package com.google.clipcoin.examples;
 
-import com.google.litecoin.core.NetworkParameters;
-import com.google.litecoin.core.TCPNetworkConnection;
-import com.google.litecoin.core.VersionMessage;
-import com.google.litecoin.discovery.DnsDiscovery;
-import com.google.litecoin.discovery.IrcDiscovery;
-import com.google.litecoin.discovery.PeerDiscoveryException;
-import com.google.litecoin.utils.BriefLogFormatter;
+import com.google.clipcoin.core.NetworkParameters;
+import com.google.clipcoin.core.TCPNetworkConnection;
+import com.google.clipcoin.core.VersionMessage;
+import com.google.clipcoin.discovery.DnsDiscovery;
+import com.google.clipcoin.discovery.IrcDiscovery;
+import com.google.clipcoin.discovery.PeerDiscoveryException;
+import com.google.clipcoin.utils.BriefLogFormatter;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
@@ -54,7 +54,7 @@ public class PrintPeers {
 
     private static void printIRC() throws PeerDiscoveryException {
         long start = System.currentTimeMillis();
-        IrcDiscovery d = new IrcDiscovery("#litecoinTEST3") {
+        IrcDiscovery d = new IrcDiscovery("#clipcoinTEST3") {
             @Override
             protected void onIRCReceive(String message) {
                 System.out.println("<- " + message);

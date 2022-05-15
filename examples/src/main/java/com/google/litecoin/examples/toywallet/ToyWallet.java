@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.examples.toywallet;
+package com.google.clipcoin.examples.toywallet;
 
-import com.google.litecoin.core.*;
-import com.google.litecoin.discovery.DnsDiscovery;
-import com.google.litecoin.discovery.IrcDiscovery;
-import com.google.litecoin.store.H2FullPrunedBlockStore;
-import com.google.litecoin.store.SPVBlockStore;
-import com.google.litecoin.utils.BriefLogFormatter;
+import com.google.clipcoin.core.*;
+import com.google.clipcoin.discovery.DnsDiscovery;
+import com.google.clipcoin.discovery.IrcDiscovery;
+import com.google.clipcoin.store.H2FullPrunedBlockStore;
+import com.google.clipcoin.store.SPVBlockStore;
+import com.google.clipcoin.utils.BriefLogFormatter;
 import com.google.common.collect.Lists;
 import org.spongycastle.util.encoders.Hex;
 
@@ -96,7 +96,7 @@ public class ToyWallet {
                 case 2:
                     try {
                         BigInteger val = tx.getValue(wallet);
-                        return Utils.litecoinValueToFriendlyString(val);
+                        return Utils.clipcoinValueToFriendlyString(val);
                     } catch (ScriptException e) {
                         throw new RuntimeException(e);
                     }
@@ -112,7 +112,7 @@ public class ToyWallet {
     }
     
     public ToyWallet(boolean testnet, boolean fullChain, String[] args) throws Exception {
-        // Set up a Litecoin connection + empty wallet. TODO: Simplify the setup for this use case.
+        // Set up a Clipcoin connection + empty wallet. TODO: Simplify the setup for this use case.
         if (testnet) {
             params = NetworkParameters.testNet();
         } else {
@@ -174,7 +174,7 @@ public class ToyWallet {
         peerGroup = new PeerGroup(params, chain);
         peerGroup.setUserAgent("ToyWallet", "1.0");
         if (testnet) {
-            peerGroup.addPeerDiscovery(new IrcDiscovery("#litecoinTEST3"));
+            peerGroup.addPeerDiscovery(new IrcDiscovery("#clipcoinTEST3"));
         } else {
             peerGroup.addPeerDiscovery(new DnsDiscovery(params));
         }
@@ -265,7 +265,7 @@ public class ToyWallet {
         txScrollPane = new JScrollPane(txTable);
         window.getContentPane().add(txScrollPane, BorderLayout.CENTER);
         
-        networkStats = new JLabel("Connecting to the Litecoin network ...");
+        networkStats = new JLabel("Connecting to the Clipcoin network ...");
         window.getContentPane().add(networkStats, BorderLayout.SOUTH);
     }
 }

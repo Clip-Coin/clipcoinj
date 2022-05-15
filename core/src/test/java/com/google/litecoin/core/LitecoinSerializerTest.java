@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
 
 import org.junit.Test;
@@ -28,7 +28,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-public class LitecoinSerializerTest {
+public class ClipcoinSerializerTest {
     private final byte[] addrMessage = Hex.decode("fbc0b6db6164647200000000000000001f000000" +
             "ed52399b01e215104d010000000000000000000000000000000000ffff0a000001208d");
 
@@ -54,8 +54,8 @@ public class LitecoinSerializerTest {
 
     @Test
     public void testAddr() throws Exception {
-    	LitecoinSerializer bs = new LitecoinSerializer(NetworkParameters.prodNet());
-        // the actual data from https://en.litecoin.it/wiki/Protocol_specification#addr
+    	ClipcoinSerializer bs = new ClipcoinSerializer(NetworkParameters.prodNet());
+        // the actual data from https://en.clipcoin.it/wiki/Protocol_specification#addr
         ByteArrayInputStream bais = new ByteArrayInputStream(addrMessage);
         AddressMessage a = (AddressMessage)bs.deserialize(bais);
         assertEquals(1, a.getAddresses().size());
@@ -71,7 +71,7 @@ public class LitecoinSerializerTest {
 
     @Test
     public void testLazyParsing()  throws Exception {
-    	LitecoinSerializer bs = new LitecoinSerializer(NetworkParameters.prodNet(), true, false);
+    	ClipcoinSerializer bs = new ClipcoinSerializer(NetworkParameters.prodNet(), true, false);
     	
     	ByteArrayInputStream bais = new ByteArrayInputStream(txMessage);
     	Transaction tx = (Transaction)bs.deserialize(bais);
@@ -96,7 +96,7 @@ public class LitecoinSerializerTest {
     }
     
     private void testCachedParsing(boolean lazy)  throws Exception {
-    	LitecoinSerializer bs = new LitecoinSerializer(NetworkParameters.prodNet(), lazy, true);
+    	ClipcoinSerializer bs = new ClipcoinSerializer(NetworkParameters.prodNet(), lazy, true);
     	
     	//first try writing to a fields to ensure uncaching and children are not affected
     	ByteArrayInputStream bais = new ByteArrayInputStream(txMessage);
@@ -163,7 +163,7 @@ public class LitecoinSerializerTest {
      */
     @Test
     public void testHeaders1() throws Exception {
-        LitecoinSerializer bs = new LitecoinSerializer(NetworkParameters.prodNet());
+        ClipcoinSerializer bs = new ClipcoinSerializer(NetworkParameters.prodNet());
 
         ByteArrayInputStream bais = new ByteArrayInputStream(Hex.decode("fbc0b6db686561" +
                 "646572730000000000520000005d4fab8101010000006fe28c0ab6f1b372c1a6a246ae6" +
@@ -190,7 +190,7 @@ public class LitecoinSerializerTest {
      * Get 6 headers of blocks 1-6 in the chain
      */
     public void testHeaders2() throws Exception {
-        LitecoinSerializer bs = new LitecoinSerializer(NetworkParameters.prodNet());
+        ClipcoinSerializer bs = new ClipcoinSerializer(NetworkParameters.prodNet());
 
         ByteArrayInputStream bais = new ByteArrayInputStream(Hex.decode("fbc0b6db6865616465" +
                 "72730000000000e701000085acd4ea06010000006fe28c0ab6f1b372c1a6a246ae63f74f931e" +

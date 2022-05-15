@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -41,7 +41,7 @@ public class FilteredBlock extends Message {
         super(params, payloadBytes, 0);
     }
     
-    public void litecoinSerializeToStream(OutputStream stream) throws IOException {
+    public void clipcoinSerializeToStream(OutputStream stream) throws IOException {
         throw new RuntimeException("Not implemented");
     }
 

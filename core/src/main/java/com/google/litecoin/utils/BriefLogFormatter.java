@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.utils;
+package com.google.clipcoin.utils;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

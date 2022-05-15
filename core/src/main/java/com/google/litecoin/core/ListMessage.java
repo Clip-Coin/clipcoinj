@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -109,7 +109,7 @@ public abstract class ListMessage extends Message {
     }
 
     @Override
-    public void litecoinSerializeToStream(OutputStream stream) throws IOException {
+    public void clipcoinSerializeToStream(OutputStream stream) throws IOException {
         stream.write(new VarInt(items.size()).encode());
         for (InventoryItem i : items) {
             // Write out the type code.

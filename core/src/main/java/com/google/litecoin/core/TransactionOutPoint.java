@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -37,7 +37,7 @@ public class TransactionOutPoint extends ChildMessage implements Serializable {
     /** Which output of that transaction we are talking about. */
     private long index;
 
-    // This is not part of Litecoin serialization. It's included in Java serialization.
+    // This is not part of Clipcoin serialization. It's included in Java serialization.
     // It points to the connected transaction.
     Transaction fromTx;
 
@@ -102,7 +102,7 @@ public class TransactionOutPoint extends ChildMessage implements Serializable {
     }
 
     @Override
-    protected void litecoinSerializeToStream(OutputStream stream) throws IOException {
+    protected void clipcoinSerializeToStream(OutputStream stream) throws IOException {
         stream.write(Utils.reverseBytes(hash.getBytes()));
         Utils.uint32ToByteStreamLE(index, stream);
     }

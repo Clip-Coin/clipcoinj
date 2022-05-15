@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
 import org.spongycastle.crypto.digests.RIPEMD160Digest;
 
@@ -27,7 +27,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
-import static com.google.litecoin.core.Utils.bytesToHexString;
+import static com.google.clipcoin.core.Utils.bytesToHexString;
 
 /**
  * A chunk in a script
@@ -51,7 +51,7 @@ class ScriptChunk {
 /**
  * <p>Programs embedded inside transactions that control redemption of payments.</p>
  *
- * <p>Litecoin transactions don't specify what they do directly. Instead <a href="https://en.litecoin.it/wiki/Script">a
+ * <p>Clipcoin transactions don't specify what they do directly. Instead <a href="https://en.clipcoin.it/wiki/Script">a
  * small binary stack language</a> is used to define programs that when evaluated return whether the transaction
  * "accepts" or rejects the other transactions connected to it.</p>
  *
@@ -579,7 +579,7 @@ public class Script {
     public byte[] getPubKeyHash() throws ScriptException {
         if (!isSentToAddress())
             throw new ScriptException("Script not in the standard scriptPubKey form");
-        // Otherwise, the third element is the hash of the public key, ie the litecoin address.
+        // Otherwise, the third element is the hash of the public key, ie the clipcoin address.
         return chunks.get(2).data;
     }
 
@@ -785,12 +785,12 @@ public class Script {
      * spending input to provide a program matching that hash. This rule is "soft enforced" by the network as it does
      * not exist in Satoshis original implementation. It means blocks containing P2SH transactions that don't match
      * correctly are considered valid, but won't be mined upon, so they'll be rapidly re-orgd out of the chain. This
-     * logic is defined by <a href="https://en.litecoin.it/wiki/BIP_0016">BIP 16</a>.</p>
+     * logic is defined by <a href="https://en.clipcoin.it/wiki/BIP_0016">BIP 16</a>.</p>
      *
-     * <p>litecoinj does not support creation of P2SH transactions today. The goal of P2SH is to allow short addresses
+     * <p>clipcoinj does not support creation of P2SH transactions today. The goal of P2SH is to allow short addresses
      * even for complex scripts (eg, multi-sig outputs) so they are convenient to work with in things like QRcodes or
      * with copy/paste, and also to minimize the size of the unspent output set (which improves performance of the
-     * Litecoin system).</p>
+     * Clipcoin system).</p>
      */
     public boolean isPayToScriptHash() {
         return program.length == 23 &&

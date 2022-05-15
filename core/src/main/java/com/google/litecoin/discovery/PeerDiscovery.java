@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.discovery;
+package com.google.clipcoin.discovery;
 
 import java.net.InetSocketAddress;
 import java.util.concurrent.TimeUnit;
 
 /**
- * A PeerDiscovery object is responsible for finding addresses of other nodes in the Litecoin P2P network. Note that
+ * A PeerDiscovery object is responsible for finding addresses of other nodes in the Clipcoin P2P network. Note that
  * the addresses returned may or may not be accepting connections.
  */
 public interface PeerDiscovery {

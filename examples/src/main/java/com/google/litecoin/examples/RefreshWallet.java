@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.examples;
+package com.google.clipcoin.examples;
 
-import com.google.litecoin.core.*;
-import com.google.litecoin.store.BlockStore;
-import com.google.litecoin.store.MemoryBlockStore;
+import com.google.clipcoin.core.*;
+import com.google.clipcoin.store.BlockStore;
+import com.google.clipcoin.store.MemoryBlockStore;
 
 import java.io.File;
 import java.math.BigInteger;

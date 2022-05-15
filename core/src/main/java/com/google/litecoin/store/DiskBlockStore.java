@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.store;
+package com.google.clipcoin.store;
 
-import com.google.litecoin.core.*;
-import com.google.litecoin.utils.NamedSemaphores;
+import com.google.clipcoin.core.*;
+import com.google.clipcoin.utils.NamedSemaphores;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -183,7 +183,7 @@ public class DiskBlockStore implements BlockStore {
             Sha256Hash hash = block.getHeader().getHash();
             checkState(blockMap.get(hash) == null, "Attempt to insert duplicate");
             // Append to the end of the file. The other fields in StoredBlock will be recalculated when it's reloaded.
-            byte[] bytes = block.getHeader().litecoinSerialize();
+            byte[] bytes = block.getHeader().clipcoinSerialize();
             file.write(bytes);
             blockMap.put(hash, block);
         } catch (IOException e) {

@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
-import com.google.litecoin.store.BlockStore;
-import com.google.litecoin.store.BlockStoreException;
+import com.google.clipcoin.store.BlockStore;
+import com.google.clipcoin.store.BlockStoreException;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -99,7 +99,7 @@ public class TestUtils {
      * Roundtrip a transaction so that it appears as if it has just come from the wire
      */
     public static Transaction roundTripTransaction(NetworkParameters params, Transaction tx) throws IOException, ProtocolException {
-        LitecoinSerializer bs = new LitecoinSerializer(params);
+        ClipcoinSerializer bs = new ClipcoinSerializer(params);
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         bs.serialize(tx, bos);
         return (Transaction) bs.deserialize(new ByteArrayInputStream(bos.toByteArray()));
@@ -133,8 +133,8 @@ public class TestUtils {
         doubleSpends.t2.addOutput(o2);
 
         try {
-            doubleSpends.t1 = new Transaction(params, doubleSpends.t1.litecoinSerialize());
-            doubleSpends.t2 = new Transaction(params, doubleSpends.t2.litecoinSerialize());
+            doubleSpends.t1 = new Transaction(params, doubleSpends.t1.clipcoinSerialize());
+            doubleSpends.t2 = new Transaction(params, doubleSpends.t2.clipcoinSerialize());
         } catch (ProtocolException e) {
             throw new RuntimeException(e);
         }

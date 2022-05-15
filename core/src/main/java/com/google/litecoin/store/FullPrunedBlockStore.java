@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.store;
+package com.google.clipcoin.store;
 
-import com.google.litecoin.core.Sha256Hash;
-import com.google.litecoin.core.StoredBlock;
-import com.google.litecoin.core.StoredTransactionOutput;
-import com.google.litecoin.core.StoredUndoableBlock;
+import com.google.clipcoin.core.Sha256Hash;
+import com.google.clipcoin.core.StoredBlock;
+import com.google.clipcoin.core.StoredTransactionOutput;
+import com.google.clipcoin.core.StoredUndoableBlock;
 
 /**
  * <p>An implementor of FullPrunedBlockStore saves StoredBlock objects to some storage mechanism.</p>
@@ -41,10 +41,10 @@ import com.google.litecoin.core.StoredUndoableBlock;
  * <p>It must store the {@link StoredBlock} of all blocks.</p>
  *
  * <p>A FullPrunedBlockStore contains a map of hashes to [Full]StoredBlock. The hash is the double digest of the
- * Litecoin serialization of the block header, <b>not</b> the header with the extra data as well.</p>
+ * Clipcoin serialization of the block header, <b>not</b> the header with the extra data as well.</p>
  * 
  * <p>A FullPrunedBlockStore also contains a map of hash+index to StoredTransactionOutput.  Again, the hash is
- * a standard Litecoin double-SHA256 hash of the transaction.</p>
+ * a standard Clipcoin double-SHA256 hash of the transaction.</p>
  *
  * <p>FullPrunedBlockStores are thread safe.</p>
  */

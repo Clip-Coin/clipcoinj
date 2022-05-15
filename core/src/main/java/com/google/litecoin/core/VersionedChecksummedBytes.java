@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
 import java.util.Arrays;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
 /**
- * <p>In Litecoin the following format is often used to represent some type of key:</p>
+ * <p>In Clipcoin the following format is often used to represent some type of key:</p>
  * <p/>
  * <pre>[one version byte] [data bytes] [4 checksum bytes]</pre>
  * <p/>

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
 import java.io.IOException;
 import java.util.concurrent.ArrayBlockingQueue;

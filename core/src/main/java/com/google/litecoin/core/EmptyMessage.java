@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
 /**
  * Parent class for header only messages that don't have a payload.
- * Currently this includes getaddr, ping, verack as well as the special litecoinj class UnknownMessage
+ * Currently this includes getaddr, ping, verack as well as the special clipcoinj class UnknownMessage
  *
  * @author git
  */
@@ -42,7 +42,7 @@ public abstract class EmptyMessage extends Message {
     }
 
     @Override
-    final protected void litecoinSerializeToStream(OutputStream stream) throws IOException {
+    final protected void clipcoinSerializeToStream(OutputStream stream) throws IOException {
     }
 
     @Override
@@ -74,10 +74,10 @@ public abstract class EmptyMessage extends Message {
     }
 
     /* (non-Javadoc)
-      * @see Message#litecoinSerialize()
+      * @see Message#clipcoinSerialize()
       */
     @Override
-    public byte[] litecoinSerialize() {
+    public byte[] clipcoinSerialize() {
         return new byte[0];
     }
 

@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
-import com.google.litecoin.discovery.PeerDiscovery;
-import com.google.litecoin.discovery.PeerDiscoveryException;
-import com.google.litecoin.store.MemoryBlockStore;
+import com.google.clipcoin.discovery.PeerDiscovery;
+import com.google.clipcoin.discovery.PeerDiscoveryException;
+import com.google.clipcoin.store.MemoryBlockStore;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

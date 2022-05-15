@@ -1,7 +1,7 @@
-package com.google.litecoin.uri;
+package com.google.clipcoin.uri;
 
 /**
- * <p>Exception to provide the following to {@link LitecoinURI}:</p>
+ * <p>Exception to provide the following to {@link ClipcoinURI}:</p>
  * <ul>
  * <li>Provision of parsing error messages</li>
  * </ul>
@@ -11,12 +11,12 @@ package com.google.litecoin.uri;
  *
  * @since 0.4.0
  */
-public class LitecoinURIParseException extends RuntimeException {
-    public LitecoinURIParseException(String s) {
+public class ClipcoinURIParseException extends RuntimeException {
+    public ClipcoinURIParseException(String s) {
         super(s);
     }
 
-    public LitecoinURIParseException(String s, Throwable throwable) {
+    public ClipcoinURIParseException(String s, Throwable throwable) {
         super(s, throwable);
     }
 }

@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.examples;
+package com.google.clipcoin.examples;
 
-import com.google.litecoin.core.*;
-import com.google.litecoin.crypto.KeyCrypterException;
-import com.google.litecoin.discovery.DnsDiscovery;
-import com.google.litecoin.discovery.IrcDiscovery;
-import com.google.litecoin.store.BlockStore;
-import com.google.litecoin.store.SPVBlockStore;
-import com.google.litecoin.utils.BriefLogFormatter;
+import com.google.clipcoin.core.*;
+import com.google.clipcoin.crypto.KeyCrypterException;
+import com.google.clipcoin.discovery.DnsDiscovery;
+import com.google.clipcoin.discovery.IrcDiscovery;
+import com.google.clipcoin.store.BlockStore;
+import com.google.clipcoin.store.SPVBlockStore;
+import com.google.clipcoin.utils.BriefLogFormatter;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 
@@ -43,18 +43,18 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * If running on TestNet (slow but better than using real coins on prodnet) do the following:
  * <ol>
  * <li>Backup your current wallet.dat in case of unforeseen problems</li>
- * <li>Start your litecoin client in test mode <code>litecoin -testnet</code>. This will create a new sub-directory called testnet and should not interfere with normal wallets or operations.</li>
+ * <li>Start your clipcoin client in test mode <code>clipcoin -testnet</code>. This will create a new sub-directory called testnet and should not interfere with normal wallets or operations.</li>
  * <li>(Optional) Choose a fresh address</li>
- * <li>(Optional) Visit the Testnet faucet (https://testnet.freelitecoins.appspot.com/) to load your client with test coins</li>
+ * <li>(Optional) Visit the Testnet faucet (https://testnet.freeclipcoins.appspot.com/) to load your client with test coins</li>
  * <li>Run <code>PingService testnet</code></li>
  * <li>Wait for the block chain to download</li>
- * <li>Send some coins from your litecoin client to the address provided in the PingService console</li>
+ * <li>Send some coins from your clipcoin client to the address provided in the PingService console</li>
  * <li>Leave it running until you get the coins back again</li>
  * </ol>
  * </p>
  *
  * <p>The testnet can be slow or flaky as it's a shared resource. You can use the <a href="http://sourceforge
- * .net/projects/litecoin/files/Litecoin/testnet-in-a-box/">testnet in a box</a> to do everything purely locally.</p>
+ * .net/projects/clipcoin/files/Clipcoin/testnet-in-a-box/">testnet in a box</a> to do everything purely locally.</p>
  */
 public class PingService {
     private final PeerGroup peerGroup;
@@ -102,7 +102,7 @@ public class PingService {
         peerGroup = new PeerGroup(params, chain);
         peerGroup.setUserAgent("PingService", "1.0");
         if (testNet) {
-            peerGroup.addPeerDiscovery(new IrcDiscovery("#litecoinTEST3"));
+            peerGroup.addPeerDiscovery(new IrcDiscovery("#clipcoinTEST3"));
         } else {
             peerGroup.addPeerDiscovery(new DnsDiscovery(params));
         }
@@ -117,7 +117,7 @@ public class PingService {
                 if (!tx.isPending()) return;
                 // It was broadcast, but we can't really verify it's valid until it appears in a block.
                 BigInteger value = tx.getValueSentToMe(w);
-                System.out.println("Received pending tx for " + Utils.litecoinValueToFriendlyString(value) +
+                System.out.println("Received pending tx for " + Utils.clipcoinValueToFriendlyString(value) +
                         ": " + tx);
                 tx.getConfidence().addEventListener(new TransactionConfidence.Listener() {
                     public void onConfidenceChanged(Transaction tx2) {
@@ -159,14 +159,14 @@ public class PingService {
     }
 
     private void bounceCoins(final Wallet wallet, Transaction tx) {
-        // It's impossible to pick one specific identity that you receive coins from in Litecoin as there
+        // It's impossible to pick one specific identity that you receive coins from in Clipcoin as there
         // could be inputs from many addresses. So instead we just pick the first and assume they were all
         // owned by the same person.
         try {
             BigInteger value = tx.getValueSentToMe(wallet);
             TransactionInput input = tx.getInputs().get(0);
             Address from = input.getFromAddress();
-            System.out.println("Received " + Utils.litecoinValueToFriendlyString(value) + " from " + from.toString());
+            System.out.println("Received " + Utils.clipcoinValueToFriendlyString(value) + " from " + from.toString());
             // Now send the coins back!
             final Wallet.SendResult sendResult = wallet.sendCoins(peerGroup, from, value);
             checkNotNull(sendResult);  // We should never try to send more coins than we have!

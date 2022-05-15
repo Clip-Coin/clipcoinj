@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.tools;
+package com.google.clipcoin.tools;
 
-import com.google.litecoin.core.*;
-import com.google.litecoin.crypto.KeyCrypterException;
-import com.google.litecoin.discovery.DnsDiscovery;
-import com.google.litecoin.discovery.IrcDiscovery;
-import com.google.litecoin.discovery.PeerDiscovery;
-import com.google.litecoin.store.*;
-import com.google.litecoin.utils.BriefLogFormatter;
+import com.google.clipcoin.core.*;
+import com.google.clipcoin.crypto.KeyCrypterException;
+import com.google.clipcoin.discovery.DnsDiscovery;
+import com.google.clipcoin.discovery.IrcDiscovery;
+import com.google.clipcoin.discovery.PeerDiscovery;
+import com.google.clipcoin.store.*;
+import com.google.clipcoin.utils.BriefLogFormatter;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
 import joptsimple.util.DateConverter;
-import org.litecoinj.wallet.Protos;
+import org.clipcoinj.wallet.Protos;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.spongycastle.util.encoders.Hex;
@@ -49,7 +49,7 @@ import java.util.logging.Level;
 import java.util.logging.LogManager;
 
 /**
- * A command line tool for manipulating wallets and working with Litecoin.<p>
+ * A command line tool for manipulating wallets and working with Clipcoin.<p>
  */
 public class WalletTool {
     private static final Logger log = LoggerFactory.getLogger(WalletTool.class);
@@ -166,7 +166,7 @@ public class WalletTool {
             value = s;
         }
 
-        public boolean matchLitecoins(BigInteger comparison) {
+        public boolean matchClipcoins(BigInteger comparison) {
             try {
                 BigInteger units = Utils.toNanoCoins(value);
                 switch (type) {
@@ -282,7 +282,7 @@ public class WalletTool {
             case TEST: 
                 params = NetworkParameters.testNet();
                 chainFileName = new File("testnet.chain");
-                discovery = new IrcDiscovery("#litecoinTEST3");
+                discovery = new IrcDiscovery("#clipcoinTEST3");
                 break;
             default:
                 throw new RuntimeException("Unreachable.");
@@ -444,7 +444,7 @@ public class WalletTool {
                 req.aesKey = wallet.getKeyCrypter().deriveKey(password);
             }
             if (!wallet.completeTx(req)) {
-                System.err.println("Insufficient funds: have " + Utils.litecoinValueToFriendlyString(wallet.getBalance()));
+                System.err.println("Insufficient funds: have " + Utils.clipcoinValueToFriendlyString(wallet.getBalance()));
                 return;
             }
             try {
@@ -534,7 +534,7 @@ public class WalletTool {
 
             case BALANCE:
                 // Check if the balance already meets the given condition.
-                if (condition.matchLitecoins(wallet.getBalance(Wallet.BalanceType.ESTIMATED))) {
+                if (condition.matchClipcoins(wallet.getBalance(Wallet.BalanceType.ESTIMATED))) {
                     latch.countDown();
                     break;
                 }
@@ -544,8 +544,8 @@ public class WalletTool {
                         super.onChange();
                         saveWallet(walletFile);
                         BigInteger balance = wallet.getBalance(Wallet.BalanceType.ESTIMATED);
-                        if (condition.matchLitecoins(balance)) {
-                            System.out.println(Utils.litecoinValueToFriendlyString(balance));
+                        if (condition.matchClipcoins(balance)) {
+                            System.out.println(Utils.clipcoinValueToFriendlyString(balance));
                             latch.countDown();
                         }
                     }
@@ -742,7 +742,7 @@ public class WalletTool {
                 Address address = new Address(wallet.getParams(), addr);
                 key = wallet.findKeyFromPubHash(address.getHash160());
             } catch (AddressFormatException e) {
-                System.err.println(addr + " does not parse as a Litecoin address of the right network parameters.");
+                System.err.println(addr + " does not parse as a Clipcoin address of the right network parameters.");
                 return;
             }            
         }

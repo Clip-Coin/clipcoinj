@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.litecoin.store;
+package com.google.clipcoin.store;
 
-import com.google.litecoin.core.Address;
-import com.google.litecoin.core.ECKey;
-import com.google.litecoin.core.NetworkParameters;
-import com.google.litecoin.core.StoredBlock;
+import com.google.clipcoin.core.Address;
+import com.google.clipcoin.core.ECKey;
+import com.google.clipcoin.core.NetworkParameters;
+import com.google.clipcoin.core.StoredBlock;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -40,7 +40,7 @@ public class DiskBlockStoreTest {
 
     @Before
     public void setUp() throws IOException {
-        temp = folder.newFile("litecoinj-test");
+        temp = folder.newFile("clipcoinj-test");
         System.out.println(temp.getAbsolutePath());
 
         params = NetworkParameters.unitTests();

@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
-import com.google.litecoin.store.BlockStore;
-import com.google.litecoin.store.BlockStoreException;
-import com.google.litecoin.store.FullPrunedBlockStore;
+import com.google.clipcoin.store.BlockStore;
+import com.google.clipcoin.store.BlockStoreException;
+import com.google.clipcoin.store.FullPrunedBlockStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,7 +44,7 @@ import static com.google.common.base.Preconditions.*;
  *    handles the case of blocks that contained duplicated coinbase transactions.</li>
  * </ol>
  *
- * <p>Checkpoints are used by a {@link BlockChain} to initialize fresh {@link com.google.litecoin.store.SPVBlockStore}s,
+ * <p>Checkpoints are used by a {@link BlockChain} to initialize fresh {@link com.google.clipcoin.store.SPVBlockStore}s,
  * and by {@link FullPrunedBlockChain} to prevent re-orgs beyond them.</p>
  */
 public class CheckpointManager {

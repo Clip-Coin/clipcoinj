@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
-import com.google.litecoin.store.BlockStore;
-import com.google.litecoin.store.BlockStoreException;
-import com.google.litecoin.utils.Locks;
+import com.google.clipcoin.store.BlockStore;
+import com.google.clipcoin.store.BlockStoreException;
+import com.google.clipcoin.utils.Locks;
 import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
@@ -41,9 +41,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
 /**
- * A Peer handles the high level communication with a Litecoin node.
+ * A Peer handles the high level communication with a Clipcoin node.
  *
- * <p>{@link Peer#getHandler()} is part of a Netty Pipeline with a Litecoin serializer downstream of it.
+ * <p>{@link Peer#getHandler()} is part of a Netty Pipeline with a Clipcoin serializer downstream of it.
  */
 public class Peer {
     interface PeerLifecycleListener {
@@ -112,7 +112,7 @@ public class Peer {
         Sha256Hash hash;
         SettableFuture future;
         // If the peer does not support the notfound message, we'll use ping/pong messages to simulate it. This is
-        // a nasty hack that relies on the fact that litecoin-qt is single threaded and processes messages in order.
+        // a nasty hack that relies on the fact that clipcoin-qt is single threaded and processes messages in order.
         // The nonce field records which pong should clear this request as "not found".
         long nonce;
     }
@@ -230,7 +230,7 @@ public class Peer {
             e.getChannel().close();
         }
 
-        /** Handle incoming Litecoin messages */
+        /** Handle incoming Clipcoin messages */
         @Override
         public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
             Message m = (Message)e.getMessage();
@@ -369,7 +369,7 @@ public class Peer {
         }
     }
 
-    /** Returns the Netty Pipeline stage handling the high level Litecoin protocol. */
+    /** Returns the Netty Pipeline stage handling the high level Clipcoin protocol. */
     public PeerHandler getHandler() {
         return handler;
     }
@@ -1064,7 +1064,7 @@ public class Peer {
             List<Sha256Hash> blockLocator = new ArrayList<Sha256Hash>(51);
             // For now we don't do the exponential thinning as suggested here:
             //
-            //   https://en.litecoin.it/wiki/Protocol_specification#getblocks
+            //   https://en.clipcoin.it/wiki/Protocol_specification#getblocks
             //
             // This is because it requires scanning all the block chain headers, which is very slow. Instead we add the top
             // 50 block headers. If there is a re-org deeper than that, we'll end up downloading the entire chain. We
@@ -1176,7 +1176,7 @@ public class Peer {
     /**
      * Sends the peer a ping message and returns a future that will be invoked when the pong is received back.
      * The future provides a number which is the number of milliseconds elapsed between the ping and the pong.
-     * Once the pong is received the value returned by {@link com.google.litecoin.core.Peer#getLastPingTime()} is
+     * Once the pong is received the value returned by {@link com.google.clipcoin.core.Peer#getLastPingTime()} is
      * updated.
      * @throws ProtocolException if the peer version is too low to support measurable pings.
      */
@@ -1195,7 +1195,7 @@ public class Peer {
     }
 
     /**
-     * Returns the elapsed time of the last ping/pong cycle. If {@link com.google.litecoin.core.Peer#ping()} has never
+     * Returns the elapsed time of the last ping/pong cycle. If {@link com.google.clipcoin.core.Peer#ping()} has never
      * been called or we did not hear back the "pong" message yet, returns {@link Long#MAX_VALUE}.
      */
     public long getLastPingTime() {
@@ -1210,7 +1210,7 @@ public class Peer {
     }
 
     /**
-     * Returns a moving average of the last N ping/pong cycles. If {@link com.google.litecoin.core.Peer#ping()} has never
+     * Returns a moving average of the last N ping/pong cycles. If {@link com.google.clipcoin.core.Peer#ping()} has never
      * been called or we did not hear back the "pong" message yet, returns {@link Long#MAX_VALUE}. The moving average
      * window is 5 buckets.
      */

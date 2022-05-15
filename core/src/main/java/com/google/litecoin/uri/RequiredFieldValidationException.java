@@ -1,7 +1,7 @@
-package com.google.litecoin.uri;
+package com.google.clipcoin.uri;
 
 /**
- * <p>Exception to provide the following to {@link LitecoinURI}:</p>
+ * <p>Exception to provide the following to {@link ClipcoinURI}:</p>
  * <ul>
  * <li>Provision of parsing error messages</li>
  * </ul>
@@ -12,7 +12,7 @@ package com.google.litecoin.uri;
  * @since 0.3.0
  *         
  */
-public class RequiredFieldValidationException extends LitecoinURIParseException {
+public class RequiredFieldValidationException extends ClipcoinURIParseException {
 
     public RequiredFieldValidationException(String s) {
         super(s);

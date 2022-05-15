@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
 import com.google.common.base.Preconditions;
 import org.slf4j.Logger;
@@ -30,15 +30,15 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import static com.google.litecoin.core.Utils.doubleDigest;
-import static com.google.litecoin.core.Utils.scryptDigest;
-import static com.google.litecoin.core.Utils.doubleDigestTwoBuffers;
+import static com.google.clipcoin.core.Utils.doubleDigest;
+import static com.google.clipcoin.core.Utils.scryptDigest;
+import static com.google.clipcoin.core.Utils.doubleDigestTwoBuffers;
 
 /**
- * <p>A block is a group of transactions, and is one of the fundamental data structures of the Litecoin system.
+ * <p>A block is a group of transactions, and is one of the fundamental data structures of the Clipcoin system.
  * It records a set of {@link Transaction}s together with some data that links it into a place in the global block
  * chain, and proves that a difficult calculation was done over its contents. See
- * <a href="http://www.litecoin.org/litecoin.pdf">the Litecoin technical paper</a> for
+ * <a href="http://www.clipcoin.org/clipcoin.pdf">the Clipcoin technical paper</a> for
  * more detail on blocks. <p/>
  *
  * To get a block, you can either build one from the raw bytes you can get from another implementation, or request one
@@ -55,7 +55,7 @@ public class Block extends Message {
 
     /**
      * A constant shared by the entire network: how large in bytes a block is allowed to be. One day we may have to
-     * upgrade everyone to change this, so Litecoin can continue to grow. For now it exists as an anti-DoS measure to
+     * upgrade everyone to change this, so Clipcoin can continue to grow. For now it exists as an anti-DoS measure to
      * avoid somebody creating a titanically huge but valid block and forcing everyone to download/store it forever.
      */
     public static final int MAX_BLOCK_SIZE = 1 * 1000 * 1000;
@@ -110,13 +110,13 @@ public class Block extends Message {
         length = 80;
     }
 
-    /** Constructs a block object from the Litecoin wire format. */
+    /** Constructs a block object from the Clipcoin wire format. */
     public Block(NetworkParameters params, byte[] payloadBytes) throws ProtocolException {
         super(params, payloadBytes, 0, false, false, payloadBytes.length);
     }
 
     /**
-     * Contruct a block object from the Litecoin wire format.
+     * Contruct a block object from the Clipcoin wire format.
      * @param params NetworkParameters object.
      * @param parseLazy Whether to perform a full parse immediately or delay until a read is requested.
      * @param parseRetain Whether to retain the backing byte array for quick reserialization.  
@@ -132,12 +132,12 @@ public class Block extends Message {
     }
 
     /**
-     * <p>A utility method that calculates how much new Litecoin would be created by the block at the given height.
-     * The inflation of Litecoin is predictable and drops roughly every 4 years (210,000 blocks). At the dawn of
+     * <p>A utility method that calculates how much new Clipcoin would be created by the block at the given height.
+     * The inflation of Clipcoin is predictable and drops roughly every 4 years (210,000 blocks). At the dawn of
      * the system it was 50 coins per block, in late 2012 it went to 25 coins per block, and so on. The size of
      * a coinbase transaction is inflation plus fees.</p>
      *
-     * <p>The half-life is controlled by {@link com.google.litecoin.core.NetworkParameters#getSubsidyDecreaseBlockCount()}.
+     * <p>The half-life is controlled by {@link com.google.clipcoin.core.NetworkParameters#getSubsidyDecreaseBlockCount()}.
      * </p>
      */
     public BigInteger getBlockInflation(int height) {
@@ -370,7 +370,7 @@ public class Block extends Message {
         if (transactions != null) {
             stream.write(new VarInt(transactions.size()).encode());
             for (Transaction tx : transactions) {
-                tx.litecoinSerialize(stream);
+                tx.clipcoinSerialize(stream);
             }
         }
     }
@@ -381,7 +381,7 @@ public class Block extends Message {
      *
      * @throws IOException
      */
-    public byte[] litecoinSerialize() {
+    public byte[] clipcoinSerialize() {
         // we have completely cached byte array.
         if (headerBytesValid && transactionBytesValid) {
             Preconditions.checkNotNull(bytes, "Bytes should never be null if headerBytesValid && transactionBytesValid");
@@ -408,7 +408,7 @@ public class Block extends Message {
     }
 
     @Override
-    protected void litecoinSerializeToStream(OutputStream stream) throws IOException {
+    protected void clipcoinSerializeToStream(OutputStream stream) throws IOException {
         writeHeader(stream);
         // We may only have enough data to write the header.
         writeTransactions(stream);
@@ -835,7 +835,7 @@ public class Block extends Message {
         hash = null;
     }
 
-    /** Returns the version of the block data structure as defined by the Litecoin protocol. */
+    /** Returns the version of the block data structure as defined by the Clipcoin protocol. */
     public long getVersion() {
         maybeParseHeader();
         return version;
@@ -883,8 +883,8 @@ public class Block extends Message {
      * Returns the difficulty of the proof of work that this block should meet encoded <b>in compact form</b>. The {@link
      * BlockChain} verifies that this is not too easy by looking at the length of the chain when the block is added.
      * To find the actual value the hash should be compared against, use
-     * {@link com.google.litecoin.core.Block#getDifficultyTargetAsInteger()}. Note that this is <b>not</b> the same as
-     * the difficulty value reported by the Litecoin "getdifficulty" RPC that you may see on various block explorers.
+     * {@link com.google.clipcoin.core.Block#getDifficultyTargetAsInteger()}. Note that this is <b>not</b> the same as
+     * the difficulty value reported by the Clipcoin "getdifficulty" RPC that you may see on various block explorers.
      * That number is the result of applying a formula to the underlying difficulty to normalize the minimum to 1.
      * Calculating the difficulty that way is currently unsupported.
      */
@@ -941,7 +941,7 @@ public class Block extends Message {
         coinbase.addOutput(new TransactionOutput(params, coinbase, value, Script.createOutputScript(pubKeyTo)));
         transactions.add(coinbase);
         coinbase.setParent(this);
-        coinbase.length = coinbase.litecoinSerialize().length;
+        coinbase.length = coinbase.clipcoinSerialize().length;
         adjustLength(transactions.size(), coinbase.length);
     }
 

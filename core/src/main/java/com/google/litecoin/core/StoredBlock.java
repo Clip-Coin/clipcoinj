@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
-import com.google.litecoin.store.BlockStore;
-import com.google.litecoin.store.BlockStoreException;
+import com.google.clipcoin.store.BlockStore;
+import com.google.clipcoin.store.BlockStoreException;
 
 import java.io.*;
 import java.math.BigInteger;
@@ -126,9 +126,9 @@ public class StoredBlock implements Serializable {
         }
         buffer.put(chainWorkBytes);
         buffer.putInt(getHeight());
-        // Using unsafeLitecoinSerialize here can give us direct access to the same bytes we read off the wire,
+        // Using unsafeClipcoinSerialize here can give us direct access to the same bytes we read off the wire,
         // avoiding serialization round-trips.
-        byte[] bytes = getHeader().unsafeLitecoinSerialize();
+        byte[] bytes = getHeader().unsafeClipcoinSerialize();
         buffer.put(bytes, 0, Block.HEADER_SIZE);  // Trim the trailing 00 byte (zero transactions).
     }
 

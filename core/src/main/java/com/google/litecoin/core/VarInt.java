@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
-import static com.google.litecoin.core.Utils.isLessThanUnsigned;
+import static com.google.clipcoin.core.Utils.isLessThanUnsigned;
 
 /**
  * A variable-length encoded integer using Satoshis encoding.
@@ -30,7 +30,7 @@ public class VarInt {
         originallyEncodedSize = getSizeInBytes();
     }
 
-    // Litecoin has its own varint format, known in the C++ source as "compact size".
+    // Clipcoin has its own varint format, known in the C++ source as "compact size".
     public VarInt(byte[] buf, int offset) {
         int first = 0xFF & buf[offset];
         long val;

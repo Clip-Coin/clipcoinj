@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
 import java.io.Serializable;
 import java.util.List;

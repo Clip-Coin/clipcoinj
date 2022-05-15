@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
 /**
  * Thrown when a problem occurs in communicating with a peer, and we should

@@ -1,6 +1,6 @@
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
-import com.google.litecoin.core.Transaction.SigHash;
+import com.google.clipcoin.core.Transaction.SigHash;
 import com.google.common.base.Preconditions;
 
 import java.io.ByteArrayOutputStream;
@@ -37,7 +37,7 @@ class TransactionOutPointWithValue {
 }
 
 public class FullBlockTestGenerator {
-    // Used by LitecoindComparisonTool and FullPrunedBlockChainTest to create test cases
+    // Used by ClipcoindComparisonTool and FullPrunedBlockChainTest to create test cases
     private NetworkParameters params;
     private ECKey coinbaseOutKey;
     private byte[] coinbaseOutKeyPubKey;
@@ -338,7 +338,7 @@ public class FullBlockTestGenerator {
         b24.solve();
         blocks.add(new BlockAndValidity(b24, false, true, b23.getHash(), "b24"));
         
-        // Extend the b24 chain to make sure litecoind isn't accepting b24
+        // Extend the b24 chain to make sure clipcoind isn't accepting b24
         Block b25 = createNextBlock(b24, chainHeadHeight + 8, out7, null);
         blocks.add(new BlockAndValidity(b25, false, false, b23.getHash(), "b25"));
         
@@ -355,7 +355,7 @@ public class FullBlockTestGenerator {
         b26.solve();
         blocks.add(new BlockAndValidity(b26, false, true, b23.getHash(), "b26"));
         
-        // Extend the b26 chain to make sure litecoind isn't accepting b26
+        // Extend the b26 chain to make sure clipcoind isn't accepting b26
         Block b27 = createNextBlock(b26, chainHeadHeight + 8, out7, null);
         blocks.add(new BlockAndValidity(b27, false, false, b23.getHash(), "b27"));
         
@@ -369,7 +369,7 @@ public class FullBlockTestGenerator {
         b28.solve();
         blocks.add(new BlockAndValidity(b28, false, true, b23.getHash(), "b28"));
         
-        // Extend the b28 chain to make sure litecoind isn't accepting b28
+        // Extend the b28 chain to make sure clipcoind isn't accepting b28
         Block b29 = createNextBlock(b28, chainHeadHeight + 8, out7, null);
         blocks.add(new BlockAndValidity(b29, false, false, b23.getHash(), "b29"));
         
@@ -982,7 +982,7 @@ public class FullBlockTestGenerator {
         
         Block b56;
         try {
-            b56 = new Block(params, b57.litecoinSerialize());
+            b56 = new Block(params, b57.clipcoinSerialize());
         } catch (ProtocolException e) {
             throw new RuntimeException(e); // Cannot happen.
         }
@@ -1108,14 +1108,14 @@ public class FullBlockTestGenerator {
             Preconditions.checkState(new VarInt(varIntBytes, 0).value == b64Created.getTransactions().size());
             
             for (Transaction transaction : b64Created.getTransactions())
-                transaction.litecoinSerialize(stream);
+                transaction.clipcoinSerialize(stream);
             b64 = new Block(params, stream.toByteArray(), false, true, stream.size());
             
             // The following checks are checking to ensure block serialization functions in the way needed for this test
             // If they fail, it is likely not an indication of error, but an indication that this test needs rewritten
             Preconditions.checkState(stream.size() == b64Created.getMessageSize() + 8);
             Preconditions.checkState(stream.size() == b64.getMessageSize());
-            Preconditions.checkState(Arrays.equals(stream.toByteArray(), b64.litecoinSerialize()));
+            Preconditions.checkState(Arrays.equals(stream.toByteArray(), b64.clipcoinSerialize()));
             Preconditions.checkState(b64.getOptimalEncodingMessageSize() == b64Created.getMessageSize());
         }
         blocks.add(new BlockAndValidity(b64, true, false, b64.getHash(), "b64"));

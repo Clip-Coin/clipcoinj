@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
 import java.io.*;
 import java.math.BigInteger;
@@ -139,7 +139,7 @@ public class StoredTransactionOutput implements Serializable {
     }
 
     public String toString() {
-        return String.format("Stored TxOut of %s (%s:%d)", Utils.litecoinValueToFriendlyString(value), hash.toString(), index);
+        return String.format("Stored TxOut of %s (%s:%d)", Utils.clipcoinValueToFriendlyString(value), hash.toString(), index);
     }
 
     public int hashCode() {

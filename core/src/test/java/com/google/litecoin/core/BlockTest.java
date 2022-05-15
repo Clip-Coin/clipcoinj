@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
 import org.junit.Test;
 import org.spongycastle.util.encoders.Hex;
@@ -113,19 +113,19 @@ public class BlockTest {
     public void testHeaderParse() throws Exception {
         Block block = new Block(params, blockBytes);
         Block header = block.cloneAsHeader();
-        Block reparsed = new Block(params, header.litecoinSerialize());
+        Block reparsed = new Block(params, header.clipcoinSerialize());
         assertEquals(reparsed, header);
     }
 
     @Test
-    public void testLitecoinSerialization() throws Exception {
+    public void testClipcoinSerialization() throws Exception {
         // We have to be able to reserialize everything exactly as we found it for hashing to work. This test also
         // proves that transaction serialization works, along with all its subobjects like scripts and in/outpoints.
         //
-        // NB: This tests the LITECOIN proprietary serialization protocol. A different test checks Java serialization
+        // NB: This tests the CLIPCOIN proprietary serialization protocol. A different test checks Java serialization
         // of transactions.
         Block block = new Block(params, blockBytes);
-        assertTrue(Arrays.equals(blockBytes, block.litecoinSerialize()));
+        assertTrue(Arrays.equals(blockBytes, block.clipcoinSerialize()));
     }
 
     @Test
@@ -144,7 +144,7 @@ public class BlockTest {
         Transaction tx2 = (Transaction) ois.readObject();
         ois.close();
 
-        // Note that this will actually check the transactions are equal by doing litecoin serialization and checking
+        // Note that this will actually check the transactions are equal by doing clipcoin serialization and checking
         // the bytestreams are the same! A true "deep equals" is not implemented for Transaction. The primary purpose
         // of this test is to ensure no errors occur during the Java serialization/deserialization process.
         assertEquals(tx, tx2);
@@ -154,27 +154,27 @@ public class BlockTest {
     public void testUpdateLength() {
         NetworkParameters params = NetworkParameters.unitTests();
         Block block = params.genesisBlock.createNextBlockWithCoinbase(new ECKey().getPubKey());
-        assertEquals(block.litecoinSerialize().length, block.length);
+        assertEquals(block.clipcoinSerialize().length, block.length);
         final int origBlockLen = block.length;
         Transaction tx = new Transaction(params);
         // this is broken until the transaction has > 1 input + output (which is required anyway...)
-        //assertTrue(tx.length == tx.litecoinSerialize().length && tx.length == 8);
+        //assertTrue(tx.length == tx.clipcoinSerialize().length && tx.length == 8);
         byte[] outputScript = new byte[10];
         Arrays.fill(outputScript, (byte)Script.OP_FALSE);
         tx.addOutput(new TransactionOutput(params, null, BigInteger.valueOf(1), outputScript));
         tx.addInput(new TransactionInput(params, null, new byte[] {(byte)Script.OP_FALSE},
                 new TransactionOutPoint(params, 0, Sha256Hash.create(new byte[] {1}))));
         int origTxLength = 8 + 2 + 8 + 1 + 10 + 40 + 1 + 1;
-        assertEquals(tx.litecoinSerialize().length, tx.length);
+        assertEquals(tx.clipcoinSerialize().length, tx.length);
         assertEquals(origTxLength, tx.length);
         block.addTransaction(tx);
-        assertEquals(block.litecoinSerialize().length, block.length);
+        assertEquals(block.clipcoinSerialize().length, block.length);
         assertEquals(origBlockLen + tx.length, block.length);
         block.getTransactions().get(1).getInputs().get(0).setScriptBytes(new byte[] {(byte)Script.OP_FALSE, (byte)Script.OP_FALSE});
         assertEquals(block.length, origBlockLen + tx.length);
         assertEquals(tx.length, origTxLength + 1);
         block.getTransactions().get(1).getInputs().get(0).setScriptBytes(new byte[] {});
-        assertEquals(block.length, block.litecoinSerialize().length);
+        assertEquals(block.length, block.clipcoinSerialize().length);
         assertEquals(block.length, origBlockLen + tx.length);
         assertEquals(tx.length, origTxLength - 1);
         block.getTransactions().get(1).addInput(new TransactionInput(params, null, new byte[] {(byte)Script.OP_FALSE},

@@ -1,11 +1,11 @@
-package com.google.litecoin.store;
+package com.google.clipcoin.store;
 
 
-import com.google.litecoin.core.*;
-import com.google.litecoin.core.TransactionConfidence.ConfidenceType;
-import com.google.litecoin.utils.BriefLogFormatter;
+import com.google.clipcoin.core.*;
+import com.google.clipcoin.core.TransactionConfidence.ConfidenceType;
+import com.google.clipcoin.utils.BriefLogFormatter;
 import com.google.protobuf.ByteString;
-import org.litecoinj.wallet.Protos;
+import org.clipcoinj.wallet.Protos;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,10 +15,10 @@ import java.math.BigInteger;
 import java.net.InetAddress;
 import java.util.*;
 
-import static com.google.litecoin.core.TestUtils.createFakeTx;
+import static com.google.clipcoin.core.TestUtils.createFakeTx;
 import static org.junit.Assert.*;
 
-import com.google.litecoin.crypto.KeyCrypter;
+import com.google.clipcoin.crypto.KeyCrypter;
 
 public class WalletProtobufSerializerTest {
     static final NetworkParameters params = NetworkParameters.unitTests();
@@ -67,7 +67,7 @@ public class WalletProtobufSerializerTest {
         assertEquals(1, wallet1.getTransactions(true, true).size());
         assertEquals(v1, wallet1.getBalance(Wallet.BalanceType.ESTIMATED));
         Transaction t1copy = wallet1.getTransaction(t1.getHash());
-        assertArrayEquals(t1.litecoinSerialize(), t1copy.litecoinSerialize());
+        assertArrayEquals(t1.clipcoinSerialize(), t1copy.clipcoinSerialize());
         assertEquals(2, t1copy.getConfidence().numBroadcastPeers());
         assertEquals(TransactionConfidence.Source.NETWORK, t1copy.getConfidence().getSource());
         

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -73,7 +73,7 @@ public class GetBlocksMessage extends Message {
         return b.toString();
     }
 
-    protected void litecoinSerializeToStream(OutputStream stream) throws IOException {
+    protected void clipcoinSerializeToStream(OutputStream stream) throws IOException {
         // Version, for some reason.
         Utils.uint32ToByteStreamLE(NetworkParameters.PROTOCOL_VERSION, stream);
         // Then a vector of block hashes. This is actually a "block locator", a set of block

@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
-import com.google.litecoin.core.Peer.PeerHandler;
+import com.google.clipcoin.core.Peer.PeerHandler;
 import com.google.common.util.concurrent.ListenableFuture;
 import org.easymock.Capture;
 import org.easymock.CaptureType;
@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Future;
 
-import static com.google.litecoin.core.TestUtils.*;
+import static com.google.clipcoin.core.TestUtils.*;
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 

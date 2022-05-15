@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.store;
+package com.google.clipcoin.store;
 
-import com.google.litecoin.core.Sha256Hash;
-import com.google.litecoin.core.StoredBlock;
+import com.google.clipcoin.core.Sha256Hash;
+import com.google.clipcoin.core.StoredBlock;
 
 /**
  * An implementor of BlockStore saves StoredBlock objects to disk. Different implementations store them in
  * different ways. An in-memory implementation (MemoryBlockStore) exists for unit testing but real apps will want to
  * use implementations that save to disk.<p>
  *
- * A BlockStore is a map of hashes to StoredBlock. The hash is the double digest of the Litecoin serialization
+ * A BlockStore is a map of hashes to StoredBlock. The hash is the double digest of the Clipcoin serialization
  * of the block header, <b>not</b> the header with the extra data as well.<p>
  *
  * BlockStores are thread safe.
@@ -45,8 +45,8 @@ public interface BlockStore {
 
     /**
      * Returns the {@link StoredBlock} that represents the top of the chain of greatest total work. Note that this
-     * can be arbitrarily expensive, you probably should use {@link com.google.litecoin.core.BlockChain#getChainHead()}
-     * or perhaps {@link com.google.litecoin.core.BlockChain#getBestChainHeight()} which will run in constant time and
+     * can be arbitrarily expensive, you probably should use {@link com.google.clipcoin.core.BlockChain#getChainHead()}
+     * or perhaps {@link com.google.clipcoin.core.BlockChain#getBestChainHeight()} which will run in constant time and
      * not take any heavyweight locks.
      */
     StoredBlock getChainHead() throws BlockStoreException;

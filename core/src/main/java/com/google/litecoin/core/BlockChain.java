@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
-import com.google.litecoin.store.BlockStore;
-import com.google.litecoin.store.BlockStoreException;
+import com.google.clipcoin.store.BlockStore;
+import com.google.clipcoin.store.BlockStoreException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p>A BlockChain implements the <i>simplified payment verification</i> mode of the Litecoin protocol. It is the right
+ * <p>A BlockChain implements the <i>simplified payment verification</i> mode of the Clipcoin protocol. It is the right
  * choice to use for programs that have limited resources as it won't verify transactions signatures or attempt to store
  * all of the block chain. Really, this class should be called SPVBlockChain but for backwards compatibility it is not.
  * </p>
@@ -37,8 +37,8 @@ public class BlockChain extends AbstractBlockChain {
      * one from scratch, or you can deserialize a saved wallet from disk using {@link Wallet#loadFromFile(java.io.File)}
      * </p>
      *
-     * <p>For the store, you should use {@link com.google.litecoin.store.SPVBlockStore} or you could also try a
-     * {@link com.google.litecoin.store.MemoryBlockStore} if you want to hold all headers in RAM and don't care about
+     * <p>For the store, you should use {@link com.google.clipcoin.store.SPVBlockStore} or you could also try a
+     * {@link com.google.clipcoin.store.MemoryBlockStore} if you want to hold all headers in RAM and don't care about
      * disk serialization (this is rare).</p>
      */
     public BlockChain(NetworkParameters params, Wallet wallet, BlockStore blockStore) throws BlockStoreException {

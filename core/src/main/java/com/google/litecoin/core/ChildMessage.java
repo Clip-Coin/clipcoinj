@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
 /**
  * Represents a Message type that can be contained within another Message.  ChildMessages that have a cached

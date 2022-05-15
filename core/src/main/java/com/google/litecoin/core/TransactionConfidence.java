@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
 import com.google.common.base.Preconditions;
 
@@ -47,9 +47,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * <p>Alternatively, you may know that the transaction is "dead", that is, one or more of its inputs have
  * been double spent and will never confirm unless there is another re-org.</p>
  *
- * <p>TransactionConfidence is updated via the {@link com.google.litecoin.core.TransactionConfidence#notifyWorkDone(Block)}
+ * <p>TransactionConfidence is updated via the {@link com.google.clipcoin.core.TransactionConfidence#notifyWorkDone(Block)}
  * method to ensure the block depth and work done are up to date.</p>
- * To make a copy that won't be changed, use {@link com.google.litecoin.core.TransactionConfidence#duplicate()}.
+ * To make a copy that won't be changed, use {@link com.google.clipcoin.core.TransactionConfidence#duplicate()}.
  */
 public class TransactionConfidence implements Serializable {
     private static final long serialVersionUID = 4577920141400556444L;
@@ -80,7 +80,7 @@ public class TransactionConfidence implements Serializable {
          * announced and is considered valid by the network. A pending transaction will be announced if the containing
          * wallet has been attached to a live {@link PeerGroup} using {@link PeerGroup#addWallet(Wallet)}.
          * You can estimate how likely the transaction is to be included by connecting to a bunch of nodes then measuring
-         * how many announce it, using {@link com.google.litecoin.core.TransactionConfidence#numBroadcastPeers()}.
+         * how many announce it, using {@link com.google.clipcoin.core.TransactionConfidence#numBroadcastPeers()}.
          * Or if you saw it from a trusted peer, you can assume it's valid and will get mined sooner or later as well.
          */
         NOT_SEEN_IN_CHAIN(2),
@@ -327,7 +327,7 @@ public class TransactionConfidence implements Serializable {
      * value transactions like songs, or other cheap items, no blocks at all may be necessary.<p>
      *     
      * If the transaction appears in the top block, the depth is one. If the transaction does not appear in the best
-     * chain yet, throws IllegalStateException, so use {@link com.google.litecoin.core.TransactionConfidence#getConfidenceType()}
+     * chain yet, throws IllegalStateException, so use {@link com.google.clipcoin.core.TransactionConfidence#getConfidenceType()}
      * to check first.
      *
      * @throws IllegalStateException if confidence type != BUILDING.

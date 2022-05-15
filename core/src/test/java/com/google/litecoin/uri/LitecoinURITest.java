@@ -16,12 +16,12 @@
  * 
  */
 
-package com.google.litecoin.uri;
+package com.google.clipcoin.uri;
 
-import com.google.litecoin.core.Address;
-import com.google.litecoin.core.AddressFormatException;
-import com.google.litecoin.core.NetworkParameters;
-import com.google.litecoin.core.Utils;
+import com.google.clipcoin.core.Address;
+import com.google.clipcoin.core.AddressFormatException;
+import com.google.clipcoin.core.NetworkParameters;
+import com.google.clipcoin.core.Utils;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
@@ -29,73 +29,73 @@ import java.io.UnsupportedEncodingException;
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.*;
 
-public class LitecoinURITest {
+public class ClipcoinURITest {
 
-    private LitecoinURI testObject = null;
+    private ClipcoinURI testObject = null;
 
     private static final String PRODNET_GOOD_ADDRESS = "LQz2pJYaeqntA9BFB8rDX5AL2TTKGd5AuN";
 
     /**
-     * Tests conversion to Litecoin URI
+     * Tests conversion to Clipcoin URI
      * 
-     * @throws LitecoinURIParseException
+     * @throws ClipcoinURIParseException
      *             If something goes wrong
      * @throws AddressFormatException 
      */
     @Test
-    public void testConvertToLitecoinURI() throws Exception {
+    public void testConvertToClipcoinURI() throws Exception {
         Address goodAddress = new Address(NetworkParameters.prodNet(), PRODNET_GOOD_ADDRESS);
         
         // simple example
-        assertEquals("litecoin:" + PRODNET_GOOD_ADDRESS + "?amount=12.34&label=Hello&message=AMessage", LitecoinURI.convertToLitecoinURI(goodAddress, Utils.toNanoCoins("12.34"), "Hello", "AMessage"));
+        assertEquals("clipcoin:" + PRODNET_GOOD_ADDRESS + "?amount=12.34&label=Hello&message=AMessage", ClipcoinURI.convertToClipcoinURI(goodAddress, Utils.toNanoCoins("12.34"), "Hello", "AMessage"));
         
         // example with spaces, ampersand and plus
-        assertEquals("litecoin:" + PRODNET_GOOD_ADDRESS + "?amount=12.34&label=Hello%20World&message=Mess%20%26%20age%20%2B%20hope", LitecoinURI.convertToLitecoinURI(goodAddress, Utils.toNanoCoins("12.34"), "Hello World", "Mess & age + hope"));
+        assertEquals("clipcoin:" + PRODNET_GOOD_ADDRESS + "?amount=12.34&label=Hello%20World&message=Mess%20%26%20age%20%2B%20hope", ClipcoinURI.convertToClipcoinURI(goodAddress, Utils.toNanoCoins("12.34"), "Hello World", "Mess & age + hope"));
 
         // amount negative
         try {
-            LitecoinURI.convertToLitecoinURI(goodAddress, Utils.toNanoCoins("-0.1"), "hope", "glory");
+            ClipcoinURI.convertToClipcoinURI(goodAddress, Utils.toNanoCoins("-0.1"), "hope", "glory");
             fail("Expecting IllegalArgumentException");
         } catch (IllegalArgumentException e) {
             assertTrue(e.getMessage().contains("Amount must be positive"));
         }
 
         // no amount, label present, message present
-        assertEquals("litecoin:" + PRODNET_GOOD_ADDRESS + "?label=Hello&message=glory", LitecoinURI.convertToLitecoinURI(goodAddress, null, "Hello", "glory"));
+        assertEquals("clipcoin:" + PRODNET_GOOD_ADDRESS + "?label=Hello&message=glory", ClipcoinURI.convertToClipcoinURI(goodAddress, null, "Hello", "glory"));
         
         // amount present, no label, message present
-        assertEquals("litecoin:" + PRODNET_GOOD_ADDRESS + "?amount=0.1&message=glory", LitecoinURI.convertToLitecoinURI(goodAddress, Utils.toNanoCoins("0.1"), null, "glory"));
-        assertEquals("litecoin:" + PRODNET_GOOD_ADDRESS + "?amount=0.1&message=glory", LitecoinURI.convertToLitecoinURI(goodAddress, Utils.toNanoCoins("0.1"), "", "glory"));
+        assertEquals("clipcoin:" + PRODNET_GOOD_ADDRESS + "?amount=0.1&message=glory", ClipcoinURI.convertToClipcoinURI(goodAddress, Utils.toNanoCoins("0.1"), null, "glory"));
+        assertEquals("clipcoin:" + PRODNET_GOOD_ADDRESS + "?amount=0.1&message=glory", ClipcoinURI.convertToClipcoinURI(goodAddress, Utils.toNanoCoins("0.1"), "", "glory"));
 
         // amount present, label present, no message
-        assertEquals("litecoin:" + PRODNET_GOOD_ADDRESS + "?amount=12.34&label=Hello", LitecoinURI.convertToLitecoinURI(goodAddress,Utils.toNanoCoins("12.34"), "Hello", null));
-        assertEquals("litecoin:" + PRODNET_GOOD_ADDRESS + "?amount=12.34&label=Hello", LitecoinURI.convertToLitecoinURI(goodAddress, Utils.toNanoCoins("12.34"), "Hello", ""));
+        assertEquals("clipcoin:" + PRODNET_GOOD_ADDRESS + "?amount=12.34&label=Hello", ClipcoinURI.convertToClipcoinURI(goodAddress,Utils.toNanoCoins("12.34"), "Hello", null));
+        assertEquals("clipcoin:" + PRODNET_GOOD_ADDRESS + "?amount=12.34&label=Hello", ClipcoinURI.convertToClipcoinURI(goodAddress, Utils.toNanoCoins("12.34"), "Hello", ""));
               
         // amount present, no label, no message
-        assertEquals("litecoin:" + PRODNET_GOOD_ADDRESS + "?amount=1000", LitecoinURI.convertToLitecoinURI(goodAddress, Utils.toNanoCoins("1000"), null, null));
-        assertEquals("litecoin:" + PRODNET_GOOD_ADDRESS + "?amount=1000", LitecoinURI.convertToLitecoinURI(goodAddress, Utils.toNanoCoins("1000"), "", ""));
+        assertEquals("clipcoin:" + PRODNET_GOOD_ADDRESS + "?amount=1000", ClipcoinURI.convertToClipcoinURI(goodAddress, Utils.toNanoCoins("1000"), null, null));
+        assertEquals("clipcoin:" + PRODNET_GOOD_ADDRESS + "?amount=1000", ClipcoinURI.convertToClipcoinURI(goodAddress, Utils.toNanoCoins("1000"), "", ""));
         
         // no amount, label present, no message
-        assertEquals("litecoin:" + PRODNET_GOOD_ADDRESS + "?label=Hello", LitecoinURI.convertToLitecoinURI(goodAddress, null, "Hello", null));
+        assertEquals("clipcoin:" + PRODNET_GOOD_ADDRESS + "?label=Hello", ClipcoinURI.convertToClipcoinURI(goodAddress, null, "Hello", null));
         
         // no amount, no label, message present
-        assertEquals("litecoin:" + PRODNET_GOOD_ADDRESS + "?message=Agatha", LitecoinURI.convertToLitecoinURI(goodAddress, null, null, "Agatha"));
-        assertEquals("litecoin:" + PRODNET_GOOD_ADDRESS + "?message=Agatha", LitecoinURI.convertToLitecoinURI(goodAddress, null, "", "Agatha"));
+        assertEquals("clipcoin:" + PRODNET_GOOD_ADDRESS + "?message=Agatha", ClipcoinURI.convertToClipcoinURI(goodAddress, null, null, "Agatha"));
+        assertEquals("clipcoin:" + PRODNET_GOOD_ADDRESS + "?message=Agatha", ClipcoinURI.convertToClipcoinURI(goodAddress, null, "", "Agatha"));
       
         // no amount, no label, no message
-        assertEquals("litecoin:" + PRODNET_GOOD_ADDRESS, LitecoinURI.convertToLitecoinURI(goodAddress, null, null, null));
-        assertEquals("litecoin:" + PRODNET_GOOD_ADDRESS, LitecoinURI.convertToLitecoinURI(goodAddress, null, "", ""));
+        assertEquals("clipcoin:" + PRODNET_GOOD_ADDRESS, ClipcoinURI.convertToClipcoinURI(goodAddress, null, null, null));
+        assertEquals("clipcoin:" + PRODNET_GOOD_ADDRESS, ClipcoinURI.convertToClipcoinURI(goodAddress, null, "", ""));
     }
 
     /**
      * Test the simplest well-formed URI
      * 
-     * @throws LitecoinURIParseException
+     * @throws ClipcoinURIParseException
      *             If something goes wrong
      */
     @Test
-    public void testGood_Simple() throws LitecoinURIParseException {
-        testObject = new LitecoinURI(NetworkParameters.prodNet(), LitecoinURI.LITECOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS);
+    public void testGood_Simple() throws ClipcoinURIParseException {
+        testObject = new ClipcoinURI(NetworkParameters.prodNet(), ClipcoinURI.CLIPCOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS);
         assertNotNull(testObject);
         assertNull("Unexpected amount", testObject.getAmount());
         assertNull("Unexpected label", testObject.getLabel());
@@ -108,9 +108,9 @@ public class LitecoinURITest {
     @Test
     public void testBad_Scheme() {
         try {
-            testObject = new LitecoinURI(NetworkParameters.prodNet(), "blimpcoin:" + PRODNET_GOOD_ADDRESS);
-            fail("Expecting LitecoinURIParseException");
-        } catch (LitecoinURIParseException e) {
+            testObject = new ClipcoinURI(NetworkParameters.prodNet(), "blimpcoin:" + PRODNET_GOOD_ADDRESS);
+            fail("Expecting ClipcoinURIParseException");
+        } catch (ClipcoinURIParseException e) {
         }
     }
 
@@ -121,24 +121,24 @@ public class LitecoinURITest {
     public void testBad_BadSyntax() {
         // Various illegal characters
         try {
-            testObject = new LitecoinURI(NetworkParameters.prodNet(), LitecoinURI.LITECOIN_SCHEME + "|" + PRODNET_GOOD_ADDRESS);
-            fail("Expecting LitecoinURIParseException");
-        } catch (LitecoinURIParseException e) {
+            testObject = new ClipcoinURI(NetworkParameters.prodNet(), ClipcoinURI.CLIPCOIN_SCHEME + "|" + PRODNET_GOOD_ADDRESS);
+            fail("Expecting ClipcoinURIParseException");
+        } catch (ClipcoinURIParseException e) {
             assertTrue(e.getMessage().contains("Bad URI syntax"));
         }
 
         try {
-            testObject = new LitecoinURI(NetworkParameters.prodNet(), LitecoinURI.LITECOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS + "\\");
-            fail("Expecting LitecoinURIParseException");
-        } catch (LitecoinURIParseException e) {
+            testObject = new ClipcoinURI(NetworkParameters.prodNet(), ClipcoinURI.CLIPCOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS + "\\");
+            fail("Expecting ClipcoinURIParseException");
+        } catch (ClipcoinURIParseException e) {
             assertTrue(e.getMessage().contains("Bad URI syntax"));
         }
 
         // Separator without field
         try {
-            testObject = new LitecoinURI(NetworkParameters.prodNet(), LitecoinURI.LITECOIN_SCHEME + ":");
-            fail("Expecting LitecoinURIParseException");
-        } catch (LitecoinURIParseException e) {
+            testObject = new ClipcoinURI(NetworkParameters.prodNet(), ClipcoinURI.CLIPCOIN_SCHEME + ":");
+            fail("Expecting ClipcoinURIParseException");
+        } catch (ClipcoinURIParseException e) {
             assertTrue(e.getMessage().contains("Bad URI syntax"));
         }
     }
@@ -149,9 +149,9 @@ public class LitecoinURITest {
     @Test
     public void testBad_Address() {
         try {
-            testObject = new LitecoinURI(NetworkParameters.prodNet(), LitecoinURI.LITECOIN_SCHEME);
-            fail("Expecting LitecoinURIParseException");
-        } catch (LitecoinURIParseException e) {
+            testObject = new ClipcoinURI(NetworkParameters.prodNet(), ClipcoinURI.CLIPCOIN_SCHEME);
+            fail("Expecting ClipcoinURIParseException");
+        } catch (ClipcoinURIParseException e) {
         }
     }
 
@@ -161,9 +161,9 @@ public class LitecoinURITest {
     @Test
     public void testBad_IncorrectAddressType() {
         try {
-            testObject = new LitecoinURI(NetworkParameters.testNet(), LitecoinURI.LITECOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS);
-            fail("Expecting LitecoinURIParseException");
-        } catch (LitecoinURIParseException e) {
+            testObject = new ClipcoinURI(NetworkParameters.testNet(), ClipcoinURI.CLIPCOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS);
+            fail("Expecting ClipcoinURIParseException");
+        } catch (ClipcoinURIParseException e) {
             assertTrue(e.getMessage().contains("Bad address"));
         }
     }
@@ -171,23 +171,23 @@ public class LitecoinURITest {
     /**
      * Handles a simple amount
      * 
-     * @throws LitecoinURIParseException
+     * @throws ClipcoinURIParseException
      *             If something goes wrong
      */
     @Test
-    public void testGood_Amount() throws LitecoinURIParseException {
+    public void testGood_Amount() throws ClipcoinURIParseException {
         // Test the decimal parsing
-        testObject = new LitecoinURI(NetworkParameters.prodNet(), LitecoinURI.LITECOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS
+        testObject = new ClipcoinURI(NetworkParameters.prodNet(), ClipcoinURI.CLIPCOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS
                 + "?amount=9876543210.12345678");
         assertEquals("987654321012345678", testObject.getAmount().toString());
 
         // Test the decimal parsing
-        testObject = new LitecoinURI(NetworkParameters.prodNet(), LitecoinURI.LITECOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS
+        testObject = new ClipcoinURI(NetworkParameters.prodNet(), ClipcoinURI.CLIPCOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS
                 + "?amount=.12345678");
         assertEquals("12345678", testObject.getAmount().toString());
 
         // Test the integer parsing
-        testObject = new LitecoinURI(NetworkParameters.prodNet(), LitecoinURI.LITECOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS
+        testObject = new ClipcoinURI(NetworkParameters.prodNet(), ClipcoinURI.CLIPCOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS
                 + "?amount=9876543210");
         assertEquals("987654321000000000", testObject.getAmount().toString());
     }
@@ -195,12 +195,12 @@ public class LitecoinURITest {
     /**
      * Handles a simple label
      * 
-     * @throws LitecoinURIParseException
+     * @throws ClipcoinURIParseException
      *             If something goes wrong
      */
     @Test
-    public void testGood_Label() throws LitecoinURIParseException {
-        testObject = new LitecoinURI(NetworkParameters.prodNet(), LitecoinURI.LITECOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS
+    public void testGood_Label() throws ClipcoinURIParseException {
+        testObject = new ClipcoinURI(NetworkParameters.prodNet(), ClipcoinURI.CLIPCOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS
                 + "?label=Hello%20World");
         assertEquals("Hello World", testObject.getLabel());
     }
@@ -208,15 +208,15 @@ public class LitecoinURITest {
     /**
      * Handles a simple label with an embedded ampersand and plus
      * 
-     * @throws LitecoinURIParseException
+     * @throws ClipcoinURIParseException
      *             If something goes wrong
      * @throws UnsupportedEncodingException 
      */
     @Test
-    public void testGood_LabelWithAmpersandAndPlus() throws LitecoinURIParseException, UnsupportedEncodingException {
+    public void testGood_LabelWithAmpersandAndPlus() throws ClipcoinURIParseException, UnsupportedEncodingException {
         String testString = "Hello Earth & Mars + Venus";
-        String encodedLabel = LitecoinURI.encodeURLString(testString);
-        testObject = new LitecoinURI(NetworkParameters.prodNet(), LitecoinURI.LITECOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS + "?label="
+        String encodedLabel = ClipcoinURI.encodeURLString(testString);
+        testObject = new ClipcoinURI(NetworkParameters.prodNet(), ClipcoinURI.CLIPCOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS + "?label="
                 + encodedLabel);
         assertEquals(testString, testObject.getLabel());
     }
@@ -224,16 +224,16 @@ public class LitecoinURITest {
     /**
      * Handles a Russian label (Unicode test)
      * 
-     * @throws LitecoinURIParseException
+     * @throws ClipcoinURIParseException
      *             If something goes wrong
      * @throws UnsupportedEncodingException 
      */
     @Test
-    public void testGood_LabelWithRussian() throws LitecoinURIParseException, UnsupportedEncodingException {
+    public void testGood_LabelWithRussian() throws ClipcoinURIParseException, UnsupportedEncodingException {
         // Moscow in Russian in Cyrillic
         String moscowString = "\u041c\u043e\u0441\u043a\u0432\u0430";
-        String encodedLabel = LitecoinURI.encodeURLString(moscowString);
-        testObject = new LitecoinURI(NetworkParameters.prodNet(), LitecoinURI.LITECOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS + "?label="
+        String encodedLabel = ClipcoinURI.encodeURLString(moscowString);
+        testObject = new ClipcoinURI(NetworkParameters.prodNet(), ClipcoinURI.CLIPCOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS + "?label="
                 + encodedLabel);
         assertEquals(moscowString, testObject.getLabel());
     }
@@ -241,12 +241,12 @@ public class LitecoinURITest {
     /**
      * Handles a simple message
      * 
-     * @throws LitecoinURIParseException
+     * @throws ClipcoinURIParseException
      *             If something goes wrong
      */
     @Test
-    public void testGood_Message() throws LitecoinURIParseException {
-        testObject = new LitecoinURI(NetworkParameters.prodNet(), LitecoinURI.LITECOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS
+    public void testGood_Message() throws ClipcoinURIParseException {
+        testObject = new ClipcoinURI(NetworkParameters.prodNet(), ClipcoinURI.CLIPCOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS
                 + "?message=Hello%20World");
         assertEquals("Hello World", testObject.getMessage());
     }
@@ -254,41 +254,41 @@ public class LitecoinURITest {
     /**
      * Handles various well-formed combinations
      * 
-     * @throws LitecoinURIParseException
+     * @throws ClipcoinURIParseException
      *             If something goes wrong
      */
     @Test
-    public void testGood_Combinations() throws LitecoinURIParseException {
-        testObject = new LitecoinURI(NetworkParameters.prodNet(), LitecoinURI.LITECOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS
+    public void testGood_Combinations() throws ClipcoinURIParseException {
+        testObject = new ClipcoinURI(NetworkParameters.prodNet(), ClipcoinURI.CLIPCOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS
                 + "?amount=9876543210&label=Hello%20World&message=Be%20well");
         assertEquals(
-                "LitecoinURI['address'='LQz2pJYaeqntA9BFB8rDX5AL2TTKGd5AuN','amount'='987654321000000000','label'='Hello World','message'='Be well']",
+                "ClipcoinURI['address'='LQz2pJYaeqntA9BFB8rDX5AL2TTKGd5AuN','amount'='987654321000000000','label'='Hello World','message'='Be well']",
                 testObject.toString());
     }
 
     /**
      * Handles a badly formatted amount field
      * 
-     * @throws LitecoinURIParseException
+     * @throws ClipcoinURIParseException
      *             If something goes wrong
      */
     @Test
-    public void testBad_Amount() throws LitecoinURIParseException {
+    public void testBad_Amount() throws ClipcoinURIParseException {
         // Missing
         try {
-            testObject = new LitecoinURI(NetworkParameters.prodNet(), LitecoinURI.LITECOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS
+            testObject = new ClipcoinURI(NetworkParameters.prodNet(), ClipcoinURI.CLIPCOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS
                     + "?amount=");
-            fail("Expecting LitecoinURIParseException");
-        } catch (LitecoinURIParseException e) {
+            fail("Expecting ClipcoinURIParseException");
+        } catch (ClipcoinURIParseException e) {
             assertTrue(e.getMessage().contains("amount"));
         }
 
         // Non-decimal (BIP 21)
         try {
-            testObject = new LitecoinURI(NetworkParameters.prodNet(), LitecoinURI.LITECOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS
+            testObject = new ClipcoinURI(NetworkParameters.prodNet(), ClipcoinURI.CLIPCOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS
                     + "?amount=12X4");
-            fail("Expecting LitecoinURIParseException");
-        } catch (LitecoinURIParseException e) {
+            fail("Expecting ClipcoinURIParseException");
+        } catch (ClipcoinURIParseException e) {
             assertTrue(e.getMessage().contains("amount"));
         }
     }
@@ -296,16 +296,16 @@ public class LitecoinURITest {
     /**
      * Handles a badly formatted label field
      * 
-     * @throws LitecoinURIParseException
+     * @throws ClipcoinURIParseException
      *             If something goes wrong
      */
     @Test
-    public void testBad_Label() throws LitecoinURIParseException {
+    public void testBad_Label() throws ClipcoinURIParseException {
         try {
-            testObject = new LitecoinURI(NetworkParameters.prodNet(), LitecoinURI.LITECOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS
+            testObject = new ClipcoinURI(NetworkParameters.prodNet(), ClipcoinURI.CLIPCOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS
                     + "?label=");
-            fail("Expecting LitecoinURIParseException");
-        } catch (LitecoinURIParseException e) {
+            fail("Expecting ClipcoinURIParseException");
+        } catch (ClipcoinURIParseException e) {
             assertTrue(e.getMessage().contains("label"));
         }
     }
@@ -313,16 +313,16 @@ public class LitecoinURITest {
     /**
      * Handles a badly formatted message field
      * 
-     * @throws LitecoinURIParseException
+     * @throws ClipcoinURIParseException
      *             If something goes wrong
      */
     @Test
-    public void testBad_Message() throws LitecoinURIParseException {
+    public void testBad_Message() throws ClipcoinURIParseException {
         try {
-            testObject = new LitecoinURI(NetworkParameters.prodNet(), LitecoinURI.LITECOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS
+            testObject = new ClipcoinURI(NetworkParameters.prodNet(), ClipcoinURI.CLIPCOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS
                     + "?message=");
-            fail("Expecting LitecoinURIParseException");
-        } catch (LitecoinURIParseException e) {
+            fail("Expecting ClipcoinURIParseException");
+        } catch (ClipcoinURIParseException e) {
             assertTrue(e.getMessage().contains("message"));
         }
     }
@@ -330,16 +330,16 @@ public class LitecoinURITest {
     /**
      * Handles duplicated fields (sneaky address overwrite attack)
      * 
-     * @throws LitecoinURIParseException
+     * @throws ClipcoinURIParseException
      *             If something goes wrong
      */
     @Test
-    public void testBad_Duplicated() throws LitecoinURIParseException {
+    public void testBad_Duplicated() throws ClipcoinURIParseException {
         try {
-            testObject = new LitecoinURI(NetworkParameters.prodNet(), LitecoinURI.LITECOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS
+            testObject = new ClipcoinURI(NetworkParameters.prodNet(), ClipcoinURI.CLIPCOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS
                     + "?address=aardvark");
-            fail("Expecting LitecoinURIParseException");
-        } catch (LitecoinURIParseException e) {
+            fail("Expecting ClipcoinURIParseException");
+        } catch (ClipcoinURIParseException e) {
             assertTrue(e.getMessage().contains("address"));
         }
     }
@@ -347,16 +347,16 @@ public class LitecoinURITest {
     /**
      * Handles case when there are too many equals
      * 
-     * @throws LitecoinURIParseException
+     * @throws ClipcoinURIParseException
      *             If something goes wrong
      */
     @Test
-    public void testBad_TooManyEquals() throws LitecoinURIParseException {
+    public void testBad_TooManyEquals() throws ClipcoinURIParseException {
         try {
-            testObject = new LitecoinURI(NetworkParameters.prodNet(), LitecoinURI.LITECOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS
+            testObject = new ClipcoinURI(NetworkParameters.prodNet(), ClipcoinURI.CLIPCOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS
                     + "?label=aardvark=zebra");
-            fail("Expecting LitecoinURIParseException");
-        } catch (LitecoinURIParseException e) {
+            fail("Expecting ClipcoinURIParseException");
+        } catch (ClipcoinURIParseException e) {
             assertTrue(e.getMessage().contains("cannot parse name value pair"));
         }
     }
@@ -364,16 +364,16 @@ public class LitecoinURITest {
     /**
      * Handles case when there are too many question marks
      * 
-     * @throws LitecoinURIParseException
+     * @throws ClipcoinURIParseException
      *             If something goes wrong
      */
     @Test
-    public void testBad_TooManyQuestionMarks() throws LitecoinURIParseException {
+    public void testBad_TooManyQuestionMarks() throws ClipcoinURIParseException {
         try {
-            testObject = new LitecoinURI(NetworkParameters.prodNet(), LitecoinURI.LITECOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS
+            testObject = new ClipcoinURI(NetworkParameters.prodNet(), ClipcoinURI.CLIPCOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS
                     + "?label=aardvark?message=zebra");
-            fail("Expecting LitecoinURIParseException");
-        } catch (LitecoinURIParseException e) {
+            fail("Expecting ClipcoinURIParseException");
+        } catch (ClipcoinURIParseException e) {
             assertTrue(e.getMessage().contains("Too many question marks"));
         }
     }
@@ -381,42 +381,42 @@ public class LitecoinURITest {
     /**
      * Handles unknown fields (required and not required)
      * 
-     * @throws LitecoinURIParseException
+     * @throws ClipcoinURIParseException
      *             If something goes wrong
      */
     @Test
-    public void testUnknown() throws LitecoinURIParseException {
+    public void testUnknown() throws ClipcoinURIParseException {
         // Unknown not required field
-        testObject = new LitecoinURI(NetworkParameters.prodNet(), LitecoinURI.LITECOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS
+        testObject = new ClipcoinURI(NetworkParameters.prodNet(), ClipcoinURI.CLIPCOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS
                 + "?aardvark=true");
-        assertEquals("LitecoinURI['address'='LQz2pJYaeqntA9BFB8rDX5AL2TTKGd5AuN','aardvark'='true']", testObject.toString());
+        assertEquals("ClipcoinURI['address'='LQz2pJYaeqntA9BFB8rDX5AL2TTKGd5AuN','aardvark'='true']", testObject.toString());
 
         assertEquals("true", (String) testObject.getParameterByName("aardvark"));
 
         // Unknown not required field (isolated)
         try {
-            testObject = new LitecoinURI(NetworkParameters.prodNet(), LitecoinURI.LITECOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS
+            testObject = new ClipcoinURI(NetworkParameters.prodNet(), ClipcoinURI.CLIPCOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS
                     + "?aardvark");
-            fail("Expecting LitecoinURIParseException");
-        } catch (LitecoinURIParseException e) {
+            fail("Expecting ClipcoinURIParseException");
+        } catch (ClipcoinURIParseException e) {
             assertTrue(e.getMessage().contains("cannot parse name value pair"));
         }
 
         // Unknown and required field
         try {
-            testObject = new LitecoinURI(NetworkParameters.prodNet(), LitecoinURI.LITECOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS
+            testObject = new ClipcoinURI(NetworkParameters.prodNet(), ClipcoinURI.CLIPCOIN_SCHEME + ":" + PRODNET_GOOD_ADDRESS
                     + "?req-aardvark=true");
-            fail("Expecting LitecoinURIParseException");
-        } catch (LitecoinURIParseException e) {
+            fail("Expecting ClipcoinURIParseException");
+        } catch (ClipcoinURIParseException e) {
             assertTrue(e.getMessage().contains("req-aardvark"));
         }
     }
 
     @Test
-    public void brokenURIs() throws LitecoinURIParseException {
+    public void brokenURIs() throws ClipcoinURIParseException {
         // Check we can parse the incorrectly formatted URIs produced by blockchain.info and its iPhone app.
-        String str = "litecoin://1KzTSfqjF2iKCduwz59nv2uqh1W2JsTxZH?amount=0.01000000";
-        LitecoinURI uri = new LitecoinURI(str);
+        String str = "clipcoin://1KzTSfqjF2iKCduwz59nv2uqh1W2JsTxZH?amount=0.01000000";
+        ClipcoinURI uri = new ClipcoinURI(str);
         assertEquals("1KzTSfqjF2iKCduwz59nv2uqh1W2JsTxZH", uri.getAddress().toString());
         assertEquals(Utils.toNanoCoins(0, 1), uri.getAmount());
     }

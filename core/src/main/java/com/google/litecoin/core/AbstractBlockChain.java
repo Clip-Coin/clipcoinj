@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
-import com.google.litecoin.store.BlockStore;
-import com.google.litecoin.store.BlockStoreException;
-import com.google.litecoin.utils.Locks;
+import com.google.clipcoin.store.BlockStore;
+import com.google.clipcoin.store.BlockStoreException;
+import com.google.clipcoin.utils.Locks;
 import com.google.common.base.Preconditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +40,7 @@ import static com.google.common.base.Preconditions.*;
  * <p>An AbstractBlockChain implementation must be connected to a {@link BlockStore} implementation. The chain object
  * by itself doesn't store any data, that's delegated to the store. Which store you use is a decision best made by
  * reading the getting started guide, but briefly, fully validating block chains need fully validating stores. In
- * the lightweight SPV mode, a {@link com.google.litecoin.store.BoundedOverheadBlockStore} may be a good choice.</p>
+ * the lightweight SPV mode, a {@link com.google.clipcoin.store.BoundedOverheadBlockStore} may be a good choice.</p>
  *
  * <p>This class implements an abstract class which makes it simple to create a BlockChain that does/doesn't do full
  * verification.  It verifies headers and is implements most of what is required to implement SPV mode, but
@@ -49,7 +49,7 @@ import static com.google.common.base.Preconditions.*;
  * <p>There are two subclasses of AbstractBlockChain that are useful: {@link BlockChain}, which is the simplest
  * class and implements <i>simplified payment verification</i>. This is a lightweight and efficient mode that does
  * not verify the contents of blocks, just their headers. A {@link FullPrunedBlockChain} paired with a
- * {@link com.google.litecoin.store.H2FullPrunedBlockStore} implements full verification, which is equivalent to the
+ * {@link com.google.clipcoin.store.H2FullPrunedBlockStore} implements full verification, which is equivalent to the
  * original Satoshi client. To learn more about the alternative security models, please consult the articles on the
  * website.</p>
  *
@@ -83,7 +83,7 @@ public abstract class AbstractBlockChain {
     /**
      * Tracks the top of the best known chain.<p>
      *
-     * Following this one down to the genesis block produces the story of the economy from the creation of Litecoin
+     * Following this one down to the genesis block produces the story of the economy from the creation of Clipcoin
      * until the present day. The chain head can change if a new set of blocks is received that results in a chain of
      * greater work than the one obtained by following this one down. In that case a reorganize is triggered,
      * potentially invalidating transactions in our wallet.
@@ -328,7 +328,7 @@ public abstract class AbstractBlockChain {
             // Prove the block is internally valid: hash is lower than target, etc. This only checks the block contents
             // if there is a tx sending or receiving coins using an address in one of our wallets. And those transactions
             // are only lightly verified: presence in a valid connecting block is taken as proof of validity. See the
-            // article here for more details: http://code.google.com/p/litecoinj/wiki/SecurityModel
+            // article here for more details: http://code.google.com/p/clipcoinj/wiki/SecurityModel
             try {
                 block.verifyHeader();
                 if (contentsImportant)
@@ -638,7 +638,7 @@ public abstract class AbstractBlockChain {
             try {
                 if (listener.isTransactionRelevant(tx)) {
                     if (clone)
-                        tx = new Transaction(tx.params, tx.litecoinSerialize());
+                        tx = new Transaction(tx.params, tx.clipcoinSerialize());
                     listener.receiveFromBlock(tx, block, blockType);
                 }
             } catch (ScriptException e) {
@@ -784,7 +784,7 @@ public abstract class AbstractBlockChain {
         // and then leaving, making it too hard to mine a block. On non-difficulty transition points, easy
         // blocks are allowed if there has been a span of 20 minutes without one.
         final long timeDelta = next.getTimeSeconds() - prev.getTimeSeconds();
-        // There is an integer underflow bug in litecoin-qt that means mindiff blocks are accepted when time
+        // There is an integer underflow bug in clipcoin-qt that means mindiff blocks are accepted when time
         // goes backwards.
         if (timeDelta >= 0 && timeDelta <= NetworkParameters.TARGET_SPACING * 2) {
             // Walk backwards until we find a block that doesn't have the easiest proof of work, then check

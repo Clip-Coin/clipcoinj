@@ -15,12 +15,12 @@
  */
 
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
-import com.google.litecoin.core.Peer.PeerHandler;
-import com.google.litecoin.discovery.PeerDiscovery;
-import com.google.litecoin.discovery.PeerDiscoveryException;
-import com.google.litecoin.utils.Locks;
+import com.google.clipcoin.core.Peer.PeerHandler;
+import com.google.clipcoin.discovery.PeerDiscovery;
+import com.google.clipcoin.discovery.PeerDiscoveryException;
+import com.google.clipcoin.utils.Locks;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Sets;
 import com.google.common.util.concurrent.*;
@@ -251,7 +251,7 @@ public class PeerGroup extends AbstractIdleService {
     }
 
     // Create a Netty pipeline factory.  The pipeline factory will create a network processing
-    // pipeline with the litecoin serializer ({@code TCPNetworkConnection}) downstream
+    // pipeline with the clipcoin serializer ({@code TCPNetworkConnection}) downstream
     // of the higher level {@code Peer}.  Received packets will first be decoded, then passed
     // {@code Peer}.  Sent packets will be created by the {@code Peer}, then encoded and sent.
     private ChannelPipelineFactory makePipelineFactory(final NetworkParameters params, final AbstractBlockChain chain) {
@@ -351,7 +351,7 @@ public class PeerGroup extends AbstractIdleService {
      * Sets the {@link VersionMessage} that will be announced on newly created connections. A version message is
      * primarily interesting because it lets you customize the "subVer" field which is used a bit like the User-Agent
      * field from HTTP. It means your client tells the other side what it is, see
-     * <a href="https://en.litecoin.it/wiki/BIP_0014">BIP 14</a>.
+     * <a href="https://en.clipcoin.it/wiki/BIP_0014">BIP 14</a>.
      *
      * The VersionMessage you provide is copied and the best chain height/time filled in for each new connection,
      * therefore you don't have to worry about setting that. The provided object is really more of a template.
@@ -1032,7 +1032,7 @@ public class PeerGroup extends AbstractIdleService {
 
     /**
      * Returns a future that is triggered when the number of connected peers is equal to the given number of connected
-     * peers. By using this with {@link com.google.litecoin.core.PeerGroup#getMaxConnections()} you can wait until the
+     * peers. By using this with {@link com.google.clipcoin.core.PeerGroup#getMaxConnections()} you can wait until the
      * network is fully online. To block immediately, just call get() on the result.
      *
      * @param numPeers How many peers to wait for.
@@ -1059,7 +1059,7 @@ public class PeerGroup extends AbstractIdleService {
      * enough, {@link PeerGroup#broadcastTransaction(Transaction)} will wait until the minimum number is reached so
      * propagation across the network can be observed. If no value has been set using
      * {@link PeerGroup#setMinBroadcastConnections(int)} a default of half of whatever
-     * {@link com.google.litecoin.core.PeerGroup#getMaxConnections()} returns is used.
+     * {@link com.google.clipcoin.core.PeerGroup#getMaxConnections()} returns is used.
      * @return
      */
     public int getMinBroadcastConnections() {
@@ -1079,7 +1079,7 @@ public class PeerGroup extends AbstractIdleService {
     }
 
     /**
-     * See {@link com.google.litecoin.core.PeerGroup#getMinBroadcastConnections()}.
+     * See {@link com.google.clipcoin.core.PeerGroup#getMinBroadcastConnections()}.
      */
     public void setMinBroadcastConnections(int value) {
         lock.lock();
@@ -1109,7 +1109,7 @@ public class PeerGroup extends AbstractIdleService {
      * will complete as soon as the transaction was successfully written to that peer.</p>
      *
      * <p>Other than for sending your own transactions, this method is useful if you have received a transaction from
-     * someone and want to know that it's valid. It's a bit of a weird hack because the current version of the Litecoin
+     * someone and want to know that it's valid. It's a bit of a weird hack because the current version of the Clipcoin
      * protocol does not inform you if you send an invalid transaction. Because sending bad transactions counts towards
      * your DoS limit, be careful with relaying lots of unknown transactions. Otherwise you might get kicked off the
      * network.</p>
@@ -1219,7 +1219,7 @@ public class PeerGroup extends AbstractIdleService {
 
     /**
      * Returns the period between pings for an individual peer. Setting this lower means more accurate and timely ping
-     * times are available via {@link com.google.litecoin.core.Peer#getLastPingTime()} but it increases load on the
+     * times are available via {@link com.google.clipcoin.core.Peer#getLastPingTime()} but it increases load on the
      * remote node. It defaults to 5000.
      */
     public long getPingIntervalMsec() {
@@ -1233,10 +1233,10 @@ public class PeerGroup extends AbstractIdleService {
 
     /**
      * Sets the period between pings for an individual peer. Setting this lower means more accurate and timely ping
-     * times are available via {@link com.google.litecoin.core.Peer#getLastPingTime()} but it increases load on the
+     * times are available via {@link com.google.clipcoin.core.Peer#getLastPingTime()} but it increases load on the
      * remote node. It defaults to {@link PeerGroup#DEFAULT_PING_INTERVAL_MSEC}.
      * Setting the value to be <= 0 disables pinging entirely, although you can still request one yourself
-     * using {@link com.google.litecoin.core.Peer#ping()}.
+     * using {@link com.google.clipcoin.core.Peer#ping()}.
      */
     public void setPingIntervalMsec(long pingIntervalMsec) {
         lock.lock();

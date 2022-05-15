@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
-import com.google.litecoin.store.BlockStore;
-import com.google.litecoin.store.MemoryBlockStore;
-import com.google.litecoin.utils.BriefLogFormatter;
+import com.google.clipcoin.store.BlockStore;
+import com.google.clipcoin.store.MemoryBlockStore;
+import com.google.clipcoin.utils.BriefLogFormatter;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 import org.jboss.netty.channel.*;

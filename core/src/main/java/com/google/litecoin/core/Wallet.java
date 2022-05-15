@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
-import com.google.litecoin.crypto.KeyCrypterScrypt;
-import org.litecoinj.wallet.Protos.Wallet.EncryptionType;
+import com.google.clipcoin.crypto.KeyCrypterScrypt;
+import org.clipcoinj.wallet.Protos.Wallet.EncryptionType;
 import org.spongycastle.crypto.params.KeyParameter;
 
-import com.google.litecoin.core.TransactionConfidence.ConfidenceType;
-import com.google.litecoin.core.WalletTransaction.Pool;
-import com.google.litecoin.crypto.KeyCrypter;
-import com.google.litecoin.crypto.KeyCrypterException;
-import com.google.litecoin.store.WalletProtobufSerializer;
-import com.google.litecoin.utils.Locks;
+import com.google.clipcoin.core.TransactionConfidence.ConfidenceType;
+import com.google.clipcoin.core.WalletTransaction.Pool;
+import com.google.clipcoin.crypto.KeyCrypter;
+import com.google.clipcoin.crypto.KeyCrypterException;
+import com.google.clipcoin.store.WalletProtobufSerializer;
+import com.google.clipcoin.utils.Locks;
 import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Iterables;
@@ -45,7 +45,7 @@ import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
-import static com.google.litecoin.core.Utils.litecoinValueToFriendlyString;
+import static com.google.clipcoin.core.Utils.clipcoinValueToFriendlyString;
 import static com.google.common.base.Preconditions.*;
 
 // To do list:
@@ -61,21 +61,21 @@ import static com.google.common.base.Preconditions.*;
 /**
  * <p>A Wallet stores keys and a record of transactions that send and receive value from those keys. Using these,
  * it is able to create new transactions that spend the recorded transactions, and this is the fundamental operation
- * of the Litecoin protocol.</p>
+ * of the Clipcoin protocol.</p>
  *
- * <p>To learn more about this class, read <b><a href="http://code.google.com/p/litecoinj/wiki/WorkingWithTheWallet">
+ * <p>To learn more about this class, read <b><a href="http://code.google.com/p/clipcoinj/wiki/WorkingWithTheWallet">
  *     working with the wallet.</a></b></p>
  *
  * <p>To fill up a Wallet with transactions, you need to use it in combination with a {@link BlockChain} and various
- * other objects, see the <a href="http://code.google.com/p/litecoinj/wiki/GettingStarted">Getting started</a> tutorial
+ * other objects, see the <a href="http://code.google.com/p/clipcoinj/wiki/GettingStarted">Getting started</a> tutorial
  * on the website to learn more about how to set everything up.</p>
  *
- * <p>Wallets can be serialized using either Java serialization - this is not compatible across versions of litecoinj,
+ * <p>Wallets can be serialized using either Java serialization - this is not compatible across versions of clipcoinj,
  * or protocol buffer serialization. You need to save the wallet whenever it changes, there is an auto-save feature
  * that simplifies this for you although you're still responsible for manually triggering a save when your app is about
  * to quit because the auto-save feature waits a moment before actually committing to disk to avoid IO thrashing when
  * the wallet is changing very fast (eg due to a block chain sync). See
- * {@link Wallet#autosaveToFile(java.io.File, long, java.util.concurrent.TimeUnit, com.google.litecoin.core.Wallet.AutosaveEventListener)}
+ * {@link Wallet#autosaveToFile(java.io.File, long, java.util.concurrent.TimeUnit, com.google.clipcoin.core.Wallet.AutosaveEventListener)}
  * for more information about this.</p>
  */
 public class Wallet implements Serializable, BlockChainListener {
@@ -139,7 +139,7 @@ public class Wallet implements Serializable, BlockChainListener {
      * may have unspent "change" outputs.<p>
      * <p/>
      * Note: for now we will not allow spends of transactions that did not make it into the block chain. The code
-     * that handles this in Litecoin C++ is complicated. Satoshis code will not allow you to spend unconfirmed coins,
+     * that handles this in Clipcoin C++ is complicated. Satoshis code will not allow you to spend unconfirmed coins,
      * however, it does seem to support dependency resolution entirely within the context of the memory pool so
      * theoretically you could spend zero-conf coins and all of them would be included together. To simplify we'll
      * make people wait but it would be a good improvement to resolve this in future.
@@ -873,8 +873,8 @@ public class Wallet implements Serializable, BlockChainListener {
             BigInteger valueSentFromMe = tx.getValueSentFromMe(this);
             if (log.isInfoEnabled()) {
                 log.info(String.format("Received a pending transaction %s that spends %s BTC from our own wallet," +
-                        " and sends us %s BTC", tx.getHashAsString(), Utils.litecoinValueToFriendlyString(valueSentFromMe),
-                        Utils.litecoinValueToFriendlyString(valueSentToMe)));
+                        " and sends us %s BTC", tx.getHashAsString(), Utils.clipcoinValueToFriendlyString(valueSentFromMe),
+                        Utils.clipcoinValueToFriendlyString(valueSentToMe)));
             }
             if (tx.getConfidence().getSource().equals(TransactionConfidence.Source.UNKNOWN)) {
                 log.warn("Wallet received transaction with an unknown source. Consider tagging tx!");
@@ -1047,7 +1047,7 @@ public class Wallet implements Serializable, BlockChainListener {
 
         if (!reorg) {
             log.info("Received tx {} for {} BTC: {}", new Object[]{sideChain ? "on a side chain" : "",
-                    litecoinValueToFriendlyString(valueDifference), tx.getHashAsString()});
+                    clipcoinValueToFriendlyString(valueDifference), tx.getHashAsString()});
         }
 
         onWalletChangedSuppressions++;
@@ -1127,7 +1127,7 @@ public class Wallet implements Serializable, BlockChainListener {
         }
 	// Implements revision d64f55589694
         BigInteger newBalance = getBalance();
-        log.info("Balance is now: " + litecoinValueToFriendlyString(getBalance()));
+        log.info("Balance is now: " + clipcoinValueToFriendlyString(getBalance()));
 
         // Inform anyone interested that we have received or sent coins but only if:
         //  - This is not due to a re-org.
@@ -1707,7 +1707,7 @@ public class Wallet implements Serializable, BlockChainListener {
 
     /** A SendResult is returned to you as part of sending coins to a recipient. */
     public static class SendResult {
-        /** The Litecoin transaction message that moves the money. */
+        /** The Clipcoin transaction message that moves the money. */
         public Transaction tx;
         /** A future that will complete once the tx message has been successfully broadcast to the network. */
         public ListenableFuture<Transaction> broadcastComplete;
@@ -1737,9 +1737,9 @@ public class Wallet implements Serializable, BlockChainListener {
         /**
          * A transaction can have a fee attached, which is defined as the difference between the input values
          * and output values. Any value taken in that is not provided to an output can be claimed by a miner. This
-         * is how mining is incentivized in later years of the Litecoin system when inflation drops. It also provides
+         * is how mining is incentivized in later years of the Clipcoin system when inflation drops. It also provides
          * a way for people to prioritize their transactions over others and is used as a way to make denial of service
-         * attacks expensive. Some transactions require a fee due to their structure - currently litecoinj does not
+         * attacks expensive. Some transactions require a fee due to their structure - currently clipcoinj does not
          * correctly calculate this! As of late 2012 most transactions require no fee.
          */
         public BigInteger fee = BigInteger.ZERO;
@@ -1788,7 +1788,7 @@ public class Wallet implements Serializable, BlockChainListener {
      * and lets you see the proposed transaction before anything is done with it.</p>
      *
      * <p>This is a helper method that is equivalent to using {@link Wallet.SendRequest#to(Address, java.math.BigInteger)}
-     * followed by {@link Wallet#completeTx(com.google.litecoin.core.Wallet.SendRequest)} and returning the requests
+     * followed by {@link Wallet#completeTx(com.google.clipcoin.core.Wallet.SendRequest)} and returning the requests
      * transaction object. If you want more control over the process, just do those two steps yourself.</p>
      *
      * <p>IMPORTANT: This method does NOT update the wallet. If you call createSend again you may get two transactions
@@ -1796,7 +1796,7 @@ public class Wallet implements Serializable, BlockChainListener {
      * prevent this, but that should only occur once the transaction has been accepted by the network. This implies
      * you cannot have more than one outstanding sending tx at once.</p>
      *
-     * @param address       The Litecoin address to send the money to.
+     * @param address       The Clipcoin address to send the money to.
      * @param nanocoins     How much currency to send, in nanocoins.
      * @return either the created Transaction or null if there are insufficient coins.
      * coins as spent until commitTx is called on the result.
@@ -1823,7 +1823,7 @@ public class Wallet implements Serializable, BlockChainListener {
      * Sends coins to the given address but does not broadcast the resulting pending transaction. It is still stored
      * in the wallet, so when the wallet is added to a {@link PeerGroup} or {@link Peer} the transaction will be
      * announced to the network. The given {@link SendRequest} is completed first using
-     * {@link Wallet#completeTx(com.google.litecoin.core.Wallet.SendRequest)} to make it valid.
+     * {@link Wallet#completeTx(com.google.clipcoin.core.Wallet.SendRequest)} to make it valid.
      *
      * @return the Transaction that was created, or null if there are insufficient coins in the wallet.
      */
@@ -1933,7 +1933,7 @@ public class Wallet implements Serializable, BlockChainListener {
             value = value.add(req.fee);
 
             log.info("Completing send tx with {} outputs totalling {}",
-                    req.tx.getOutputs().size(), litecoinValueToFriendlyString(value));
+                    req.tx.getOutputs().size(), clipcoinValueToFriendlyString(value));
 
             // Calculate a list of ALL potential candidates for spending and then ask a coin selector to provide us
             // with the actual outputs that'll be used to gather the required amount of value. In this way, users
@@ -1949,7 +1949,7 @@ public class Wallet implements Serializable, BlockChainListener {
             // Can we afford this?
             if (selection.valueGathered.compareTo(value) < 0) {
                 log.warn("Insufficient value in wallet for send, missing " +
-                        litecoinValueToFriendlyString(value.subtract(selection.valueGathered)));
+                        clipcoinValueToFriendlyString(value.subtract(selection.valueGathered)));
                 // TODO: Should throw an exception here.
                 return false;
             }
@@ -1961,7 +1961,7 @@ public class Wallet implements Serializable, BlockChainListener {
                 // we need to take back some coins ... this is called "change". Add another output that sends the change
                 // back to us. The address comes either from the request or getChangeAddress() as a default.
                 Address changeAddress = req.changeAddress != null ? req.changeAddress : getChangeAddress();
-                log.info("  with {} coins change", litecoinValueToFriendlyString(change));
+                log.info("  with {} coins change", clipcoinValueToFriendlyString(change));
                 req.tx.addOutput(new TransactionOutput(params, req.tx, change, changeAddress));
             }
             for (TransactionOutput output : selection.gathered) {
@@ -1978,7 +1978,7 @@ public class Wallet implements Serializable, BlockChainListener {
             }
 
             // Check size.
-            int size = req.tx.litecoinSerialize().length;
+            int size = req.tx.clipcoinSerialize().length;
             if (size > Transaction.MAX_STANDARD_TX_SIZE) {
                 // TODO: Throw an exception here.
                 log.error("Transaction could not be created without exceeding max size: {} vs {}", size,
@@ -2028,7 +2028,7 @@ public class Wallet implements Serializable, BlockChainListener {
 
     /**
      * Adds the given ECKey to the wallet. There is currently no way to delete keys (that would result in coin loss).
-     * If {@link Wallet#autosaveToFile(java.io.File, long, java.util.concurrent.TimeUnit, com.google.litecoin.core.Wallet.AutosaveEventListener)}
+     * If {@link Wallet#autosaveToFile(java.io.File, long, java.util.concurrent.TimeUnit, com.google.clipcoin.core.Wallet.AutosaveEventListener)}
      * has been called, triggers an auto save bypassing the normal coalescing delay and event handlers.
      * If the key already exists in the wallet, does nothing and returns false.
      */
@@ -2038,7 +2038,7 @@ public class Wallet implements Serializable, BlockChainListener {
 
     /**
      * Adds the given keys to the wallet. There is currently no way to delete keys (that would result in coin loss).
-     * If {@link Wallet#autosaveToFile(java.io.File, long, java.util.concurrent.TimeUnit, com.google.litecoin.core.Wallet.AutosaveEventListener)}
+     * If {@link Wallet#autosaveToFile(java.io.File, long, java.util.concurrent.TimeUnit, com.google.clipcoin.core.Wallet.AutosaveEventListener)}
      * has been called, triggers an auto save bypassing the normal coalescing delay and event handlers.
      * Returns the number of keys added, after duplicates are ignored. The onKeyAdded event will be called for each key
      * in the list that was not already present.
@@ -2220,7 +2220,7 @@ public class Wallet implements Serializable, BlockChainListener {
         lock.lock();
         try {
             StringBuilder builder = new StringBuilder();
-            builder.append(String.format("Wallet containing %s BTC in:%n", litecoinValueToFriendlyString(getBalance())));
+            builder.append(String.format("Wallet containing %s BTC in:%n", clipcoinValueToFriendlyString(getBalance())));
             builder.append(String.format("  %d unspent transactions%n", unspent.size()));
             builder.append(String.format("  %d spent transactions%n", spent.size()));
             builder.append(String.format("  %d pending transactions%n", pending.size()));
@@ -2273,11 +2273,11 @@ public class Wallet implements Serializable, BlockChainListener {
         for (Transaction tx : transactionMap.values()) {
             try {
                 builder.append("Sends ");
-                builder.append(Utils.litecoinValueToFriendlyString(tx.getValueSentFromMe(this)));
+                builder.append(Utils.clipcoinValueToFriendlyString(tx.getValueSentFromMe(this)));
                 builder.append(" and receives ");
-                builder.append(Utils.litecoinValueToFriendlyString(tx.getValueSentToMe(this)));
+                builder.append(Utils.clipcoinValueToFriendlyString(tx.getValueSentToMe(this)));
                 builder.append(", total value ");
-                builder.append(Utils.litecoinValueToFriendlyString(tx.getValue(this)));
+                builder.append(Utils.clipcoinValueToFriendlyString(tx.getValue(this)));
                 builder.append(".\n");
             } catch (ScriptException e) {
                 // Ignore and don't print this line.
@@ -2527,7 +2527,7 @@ public class Wallet implements Serializable, BlockChainListener {
                 reprocessUnincludedTxAfterReorg(pool, tx);
             }
 
-            log.info("post-reorg balance is {}", Utils.litecoinValueToFriendlyString(getBalance()));
+            log.info("post-reorg balance is {}", Utils.clipcoinValueToFriendlyString(getBalance()));
             // Inform event listeners that a re-org took place. They should save the wallet at this point.
             invokeOnReorganize();
             onWalletChangedSuppressions--;
@@ -2626,7 +2626,7 @@ public class Wallet implements Serializable, BlockChainListener {
 
     /**
      * Returns the earliest creation time of the keys in this wallet, in seconds since the epoch, ie the min of 
-     * {@link com.google.litecoin.core.ECKey#getCreationTimeSeconds()}. This can return zero if at least one key does
+     * {@link com.google.clipcoin.core.ECKey#getCreationTimeSeconds()}. This can return zero if at least one key does
      * not have that data (was created before key timestamping was implemented). <p>
      *     
      * This method is most often used in conjunction with {@link PeerGroup#setFastCatchupTimeSecs(long)} in order to
@@ -2691,7 +2691,7 @@ public class Wallet implements Serializable, BlockChainListener {
     }
 
     /**
-     * Convenience wrapper around {@link Wallet#encrypt(com.google.litecoin.crypto.KeyCrypter,
+     * Convenience wrapper around {@link Wallet#encrypt(com.google.clipcoin.crypto.KeyCrypter,
      * org.spongycastle.crypto.params.KeyParameter)} which uses the default Scrypt key derivation algorithm and
      * parameters, derives a key from the given password and returns the created key.
      */
@@ -2706,7 +2706,7 @@ public class Wallet implements Serializable, BlockChainListener {
 
     /**
      * Encrypt the wallet using the KeyCrypter and the AES key. A good default KeyCrypter to use is
-     * {@link com.google.litecoin.crypto.KeyCrypterScrypt}.
+     * {@link com.google.clipcoin.crypto.KeyCrypterScrypt}.
      *
      * @param keyCrypter The KeyCrypter that specifies how to encrypt/ decrypt a key
      * @param aesKey AES key to use (normally created using KeyCrypter#deriveKey and cached as it is time consuming to create from a password)
@@ -2729,7 +2729,7 @@ public class Wallet implements Serializable, BlockChainListener {
 
                     // Check that the encrypted key can be successfully decrypted.
                     // This is done as it is a critical failure if the private key cannot be decrypted successfully
-                    // (all litecoin controlled by that private key is lost forever).
+                    // (all clipcoin controlled by that private key is lost forever).
                     // For a correctly constructed keyCrypter the encryption should always be reversible so it is just being as cautious as possible.
                     if (!ECKey.encryptionIsReversible(key, encryptedKey, keyCrypter, aesKey)) {
                         // Abort encryption
@@ -2819,7 +2819,7 @@ public class Wallet implements Serializable, BlockChainListener {
     }
 
     /**
-     * <p>Convenience wrapper around {@link Wallet#addNewEncryptedKey(com.google.litecoin.crypto.KeyCrypter,
+     * <p>Convenience wrapper around {@link Wallet#addNewEncryptedKey(com.google.clipcoin.crypto.KeyCrypter,
      * org.spongycastle.crypto.params.KeyParameter)} which just derives the key afresh and uses the pre-set
      * keycrypter. The wallet must have been encrypted using one of the encrypt methods previously.</p>
      *
@@ -3019,7 +3019,7 @@ public class Wallet implements Serializable, BlockChainListener {
                 try {
                     if (out.isMine(this) && out.getScriptPubKey().isSentToRawPubKey()) {
                         TransactionOutPoint outPoint = new TransactionOutPoint(params, i, tx);
-                        filter.insert(outPoint.litecoinSerialize());
+                        filter.insert(outPoint.clipcoinSerialize());
                     }
                 } catch (ScriptException e) {
                     throw new RuntimeException(e); // If it is ours, we parsed the script corectly, so this shouldn't happen

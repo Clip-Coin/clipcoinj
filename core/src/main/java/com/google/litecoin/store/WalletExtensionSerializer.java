@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.store;
+package com.google.clipcoin.store;
 
 import java.util.Collection;
 import java.util.Collections;
 
-import org.litecoinj.wallet.Protos;
+import org.clipcoinj.wallet.Protos;
 
-import com.google.litecoin.core.NetworkParameters;
-import com.google.litecoin.core.Wallet;
-import com.google.litecoin.crypto.KeyCrypter;
+import com.google.clipcoin.core.NetworkParameters;
+import com.google.clipcoin.core.Wallet;
+import com.google.clipcoin.crypto.KeyCrypter;
 
 /**
  * Optional helper for WalletProtobufSerializer that allows for serialization and deserialization of Wallet objects

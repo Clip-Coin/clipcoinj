@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.examples;
+package com.google.clipcoin.examples;
 
-import com.google.litecoin.core.Wallet;
+import com.google.clipcoin.core.Wallet;
 
 import java.io.File;
 

@@ -14,22 +14,22 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
-import com.google.litecoin.core.Transaction.SigHash;
-import com.google.litecoin.core.WalletTransaction.Pool;
-import com.google.litecoin.crypto.KeyCrypter;
-import com.google.litecoin.crypto.KeyCrypterException;
-import com.google.litecoin.crypto.KeyCrypterScrypt;
-import com.google.litecoin.store.BlockStore;
-import com.google.litecoin.store.MemoryBlockStore;
-import com.google.litecoin.utils.BriefLogFormatter;
+import com.google.clipcoin.core.Transaction.SigHash;
+import com.google.clipcoin.core.WalletTransaction.Pool;
+import com.google.clipcoin.crypto.KeyCrypter;
+import com.google.clipcoin.crypto.KeyCrypterException;
+import com.google.clipcoin.crypto.KeyCrypterScrypt;
+import com.google.clipcoin.store.BlockStore;
+import com.google.clipcoin.store.MemoryBlockStore;
+import com.google.clipcoin.utils.BriefLogFormatter;
 import com.google.common.collect.Lists;
 import com.google.protobuf.ByteString;
 
-import org.litecoinj.wallet.Protos;
-import org.litecoinj.wallet.Protos.ScryptParameters;
-import org.litecoinj.wallet.Protos.Wallet.EncryptionType;
+import org.clipcoinj.wallet.Protos;
+import org.clipcoinj.wallet.Protos.ScryptParameters;
+import org.clipcoinj.wallet.Protos.Wallet.EncryptionType;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -49,11 +49,11 @@ import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import static com.google.litecoin.core.TestUtils.*;
-import static com.google.litecoin.core.TestUtils.createFakeBlock;
-import static com.google.litecoin.core.TestUtils.createFakeTx;
-import static com.google.litecoin.core.Utils.litecoinValueToFriendlyString;
-import static com.google.litecoin.core.Utils.toNanoCoins;
+import static com.google.clipcoin.core.TestUtils.*;
+import static com.google.clipcoin.core.TestUtils.createFakeBlock;
+import static com.google.clipcoin.core.TestUtils.createFakeTx;
+import static com.google.clipcoin.core.Utils.clipcoinValueToFriendlyString;
+import static com.google.clipcoin.core.Utils.toNanoCoins;
 import static org.junit.Assert.*;
 
 public class WalletTest {
@@ -172,7 +172,7 @@ public class WalletTest {
     private void basicSpendingCommon(Wallet wallet, Address toAddress, boolean testEncryption) throws Exception {
         // We'll set up a wallet that receives a coin, then sends a coin of
         // lesser value and keeps the change. We
-        // will attach a small fee. Because the Litecoin protocol makes it
+        // will attach a small fee. Because the Clipcoin protocol makes it
         // difficult to determine the fee of an
         // arbitrary transaction in isolation, we'll check that the fee was set
         // by examining the size of the change.
@@ -442,18 +442,18 @@ public class WalletTest {
         txn[0] = txn[1] = null;
         confTxns.clear();
         sendMoneyToWallet(send1, AbstractBlockChain.NewBlockType.BEST_CHAIN);
-        assertEquals(litecoinValueToFriendlyString(wallet.getBalance()), "0.90");
+        assertEquals(clipcoinValueToFriendlyString(wallet.getBalance()), "0.90");
         assertEquals(null, txn[0]);
         assertEquals(2, confTxns.size());
         assertEquals(txn[1].getHash(), send1.getHash());
-        assertEquals(litecoinValueToFriendlyString(bigints[2]), "1.00");
-        assertEquals(litecoinValueToFriendlyString(bigints[3]), "0.90");
+        assertEquals(clipcoinValueToFriendlyString(bigints[2]), "1.00");
+        assertEquals(clipcoinValueToFriendlyString(bigints[3]), "0.90");
         // And we do it again after the catchup.
         Transaction send2 = wallet.createSend(new ECKey().toAddress(params), toNanoCoins(0, 10));
         // What we'd really like to do is prove the official client would accept it .... no such luck unfortunately.
         wallet.commitTx(send2);
         sendMoneyToWallet(send2, AbstractBlockChain.NewBlockType.BEST_CHAIN);
-        assertEquals(litecoinValueToFriendlyString(wallet.getBalance()), "0.80");
+        assertEquals(clipcoinValueToFriendlyString(wallet.getBalance()), "0.80");
         BlockPair b4 = createFakeBlock(blockStore);
         confTxns.clear();
         wallet.notifyNewBestBlock(b4.storedBlock);
@@ -468,7 +468,7 @@ public class WalletTest {
         // Send 0.10 to somebody else.
         Transaction send1 = wallet.createSend(new ECKey().toAddress(params), toNanoCoins(0, 10));
         // Reserialize.
-        Transaction send2 = new Transaction(params, send1.litecoinSerialize());
+        Transaction send2 = new Transaction(params, send1.clipcoinSerialize());
         assertEquals(nanos, send2.getValueSentFromMe(wallet));
         assertEquals(BigInteger.ZERO.subtract(toNanoCoins(0, 10)), send2.getValue(wallet));
     }
@@ -485,7 +485,7 @@ public class WalletTest {
         
         assertTrue("Wallet is not consistent", wallet.isConsistent());
         
-        Transaction txClone = new Transaction(params, tx.litecoinSerialize());
+        Transaction txClone = new Transaction(params, tx.clipcoinSerialize());
         try {
             wallet.receiveFromBlock(txClone, null, BlockChain.NewBlockType.BEST_CHAIN);
             fail("Illegal argument not thrown when it should have been.");
@@ -579,7 +579,7 @@ public class WalletTest {
         Transaction send1 = wallet.createSend(new ECKey().toAddress(params), toNanoCoins(2, 90));
         // Create a double spend of just the first one.
         Transaction send2 = wallet.createSend(new ECKey().toAddress(params), toNanoCoins(1, 0));
-        send2 = new Transaction(params, send2.litecoinSerialize());
+        send2 = new Transaction(params, send2.clipcoinSerialize());
         // Broadcast send1, it's now pending.
         wallet.commitTx(send1);
         assertEquals(BigInteger.ZERO, wallet.getBalance());
@@ -628,7 +628,7 @@ public class WalletTest {
         Transaction send1 = wallet.createSend(new ECKey().toAddress(params), toNanoCoins(0, 50));
         // Create a double spend.
         Transaction send2 = wallet.createSend(new ECKey().toAddress(params), toNanoCoins(0, 50));
-        send2 = new Transaction(params, send2.litecoinSerialize());
+        send2 = new Transaction(params, send2.clipcoinSerialize());
         // Broadcast send1.
         wallet.commitTx(send1);
         assertEquals(send1, received.getOutput(0).getSpentBy().getParentTransaction());
@@ -700,7 +700,7 @@ public class WalletTest {
         });
         assertEquals(TransactionConfidence.ConfidenceType.NOT_SEEN_IN_CHAIN,
                 notifiedTx[0].getConfidence().getConfidenceType());
-        final Transaction t1Copy = new Transaction(params, t1.litecoinSerialize());
+        final Transaction t1Copy = new Transaction(params, t1.clipcoinSerialize());
         sendMoneyToWallet(t1Copy, AbstractBlockChain.NewBlockType.BEST_CHAIN);
         assertFalse(flags[0]);
         assertTrue(flags[1]);
@@ -927,7 +927,7 @@ public class WalletTest {
     @Test
     public void autosaveImmediate() throws Exception {
         // Test that the wallet will save itself automatically when it changes.
-        File f = File.createTempFile("litecoinj-unit-test", null);
+        File f = File.createTempFile("clipcoinj-unit-test", null);
         Sha256Hash hash1 = Sha256Hash.hashFileContents(f);
         // Start with zero delay and ensure the wallet file changes after adding a key.
         wallet.autosaveToFile(f, 0, TimeUnit.SECONDS, null);
@@ -960,7 +960,7 @@ public class WalletTest {
         // an auto-save cycle of 1 second.
         final File[] results = new File[2];
         final CountDownLatch latch = new CountDownLatch(2);
-        File f = File.createTempFile("litecoinj-unit-test", null);
+        File f = File.createTempFile("clipcoinj-unit-test", null);
         Sha256Hash hash1 = Sha256Hash.hashFileContents(f);
         wallet.autosaveToFile(f, 1, TimeUnit.SECONDS,
                 new Wallet.AutosaveEventListener() {

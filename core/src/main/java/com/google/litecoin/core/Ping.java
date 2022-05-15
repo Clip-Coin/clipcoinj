@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -44,7 +44,7 @@ public class Ping extends Message {
         this.hasNonce = false;
     }
     
-    public void litecoinSerializeToStream(OutputStream stream) throws IOException {
+    public void clipcoinSerializeToStream(OutputStream stream) throws IOException {
         if (hasNonce)
             Utils.int64ToByteStreamLE(nonce, stream);
     }

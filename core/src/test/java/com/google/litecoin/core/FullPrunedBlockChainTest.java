@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
-import com.google.litecoin.core.Transaction.SigHash;
-import com.google.litecoin.store.FullPrunedBlockStore;
-import com.google.litecoin.store.MemoryFullPrunedBlockStore;
-import com.google.litecoin.utils.BriefLogFormatter;
+import com.google.clipcoin.core.Transaction.SigHash;
+import com.google.clipcoin.store.FullPrunedBlockStore;
+import com.google.clipcoin.store.MemoryFullPrunedBlockStore;
+import com.google.clipcoin.utils.BriefLogFormatter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.litecoin.discovery;
+package com.google.clipcoin.discovery;
 
-import com.google.litecoin.core.NetworkParameters;
+import com.google.clipcoin.core.NetworkParameters;
 import org.junit.Test;
 
 import java.net.InetSocketAddress;

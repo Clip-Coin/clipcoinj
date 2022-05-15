@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
-import com.google.litecoin.store.BlockStore;
-import com.google.litecoin.store.MemoryBlockStore;
+import com.google.clipcoin.store.BlockStore;
+import com.google.clipcoin.store.MemoryBlockStore;
 import org.junit.Before;
 import org.junit.Test;
 import org.spongycastle.util.encoders.Hex;
@@ -26,8 +26,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 
-import static com.google.litecoin.core.TestUtils.createFakeBlock;
-import static com.google.litecoin.core.TestUtils.createFakeTx;
+import static com.google.clipcoin.core.TestUtils.createFakeBlock;
+import static com.google.clipcoin.core.TestUtils.createFakeTx;
 import static org.junit.Assert.*;
 
 public class LazyParseByteCacheTest {
@@ -99,22 +99,22 @@ public class LazyParseByteCacheTest {
 
         Block b1 = createFakeBlock(blockStore, tx1, tx2).block;
 
-        LitecoinSerializer bs = new LitecoinSerializer(unitTestParams);
+        ClipcoinSerializer bs = new ClipcoinSerializer(unitTestParams);
         
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         bs.serialize(tx1, bos);
         tx1BytesWithHeader = bos.toByteArray();
-        tx1Bytes = tx1.litecoinSerialize();
+        tx1Bytes = tx1.clipcoinSerialize();
         
         bos.reset();
         bs.serialize(tx2, bos);
         tx2BytesWithHeader = bos.toByteArray();
-        tx2Bytes = tx2.litecoinSerialize();
+        tx2Bytes = tx2.clipcoinSerialize();
         
         bos.reset();
         bs.serialize(b1, bos);
         b1BytesWithHeader = bos.toByteArray();
-        b1Bytes = b1.litecoinSerialize();
+        b1Bytes = b1.clipcoinSerialize();
     }
     
     @Test
@@ -171,16 +171,16 @@ public class LazyParseByteCacheTest {
     public void testBlock(byte[] blockBytes, boolean isChild, boolean lazy, boolean retain) throws Exception {
     	//reference serializer to produce comparison serialization output after changes to
     	//message structure.
-    	LitecoinSerializer bsRef = new LitecoinSerializer(unitTestParams, false, false);
+    	ClipcoinSerializer bsRef = new ClipcoinSerializer(unitTestParams, false, false);
     	ByteArrayOutputStream bos = new ByteArrayOutputStream();
     	
-    	LitecoinSerializer bs = new LitecoinSerializer(unitTestParams, lazy, retain);
+    	ClipcoinSerializer bs = new ClipcoinSerializer(unitTestParams, lazy, retain);
     	Block b1;
     	Block bRef;
     	b1 = (Block) bs.deserialize(new ByteArrayInputStream(blockBytes));
     	bRef = (Block) bsRef.deserialize(new ByteArrayInputStream(blockBytes));
     	
-    	//verify our reference LitecoinSerializer produces matching byte array.
+    	//verify our reference ClipcoinSerializer produces matching byte array.
     	bos.reset();
     	bsRef.serialize(bRef, bos);
     	assertTrue(Arrays.equals(bos.toByteArray(), blockBytes));
@@ -407,16 +407,16 @@ public class LazyParseByteCacheTest {
         	
     	//reference serializer to produce comparison serialization output after changes to
     	//message structure.
-    	LitecoinSerializer bsRef = new LitecoinSerializer(params, false, false);
+    	ClipcoinSerializer bsRef = new ClipcoinSerializer(params, false, false);
     	ByteArrayOutputStream bos = new ByteArrayOutputStream();
     	
-    	LitecoinSerializer bs = new LitecoinSerializer(params, lazy, retain);
+    	ClipcoinSerializer bs = new ClipcoinSerializer(params, lazy, retain);
     	Transaction t1;
     	Transaction tRef;
     	t1 = (Transaction) bs.deserialize(new ByteArrayInputStream(txBytes));
     	tRef = (Transaction) bsRef.deserialize(new ByteArrayInputStream(txBytes));
     	
-    	//verify our reference LitecoinSerializer produces matching byte array.
+    	//verify our reference ClipcoinSerializer produces matching byte array.
     	bos.reset();
     	bsRef.serialize(tRef, bos);
     	assertTrue(Arrays.equals(bos.toByteArray(), txBytes));
@@ -475,7 +475,7 @@ public class LazyParseByteCacheTest {
     	
     }
     
-    private void serDeser(LitecoinSerializer bs, Message message, byte[] sourceBytes, byte[] containedBytes, byte[] containingBytes) throws Exception {
+    private void serDeser(ClipcoinSerializer bs, Message message, byte[] sourceBytes, byte[] containedBytes, byte[] containingBytes) throws Exception {
     	ByteArrayOutputStream bos = new ByteArrayOutputStream();
     	bs.serialize(message, bos);
     	byte[] b1 = bos.toByteArray();

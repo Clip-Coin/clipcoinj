@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
-import com.google.litecoin.store.BlockStoreException;
-import com.google.litecoin.store.FullPrunedBlockStore;
+import com.google.clipcoin.store.BlockStoreException;
+import com.google.clipcoin.store.FullPrunedBlockStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +31,7 @@ import static com.google.common.base.Preconditions.checkState;
 
 /**
  * <p>A FullPrunedBlockChain works in conjunction with a {@link FullPrunedBlockStore} to verify all the rules of the
- * Litecoin system, with the downside being a larg cost in system resources. Fully verifying means all unspent transaction
+ * Clipcoin system, with the downside being a larg cost in system resources. Fully verifying means all unspent transaction
  * outputs are stored. Once a transaction output is spent and that spend is buried deep enough, the data related to it
  * is deleted to ensure disk space usage doesn't grow forever. For this reason a pruning node cannot serve the full
  * block chain to other clients, but it nevertheless provides the same security guarantees as a regular Satoshi
@@ -121,7 +121,7 @@ public class FullPrunedBlockChain extends AbstractBlockChain {
             if (!params.isCheckpoint(height)) {
                 // BIP30 violator blocks are ones that contain a duplicated transaction. They are all in the
                 // checkpoints list and we therefore only check non-checkpoints for duplicated transactions here. See the
-                // BIP30 document for more details on this: https://en.litecoin.it/wiki/BIP_0030
+                // BIP30 document for more details on this: https://en.clipcoin.it/wiki/BIP_0030
                 for (Transaction tx : block.transactions) {
                     Sha256Hash hash = tx.getHash();
                     // If we already have unspent outputs for this hash, we saw the tx already. Either the block is
@@ -164,13 +164,13 @@ public class FullPrunedBlockChain extends AbstractBlockChain {
                         // All of these copies are terribly ugly, however without them,
                         // I see some odd concurrency issues where scripts throw exceptions
                         // (mostly "Attempted OP_* on empty stack" or similar) when they shouldn't.
-                        // In my tests, total time spent in com.google.litecoin.core when
+                        // In my tests, total time spent in com.google.clipcoin.core when
                         // downloading the chain is < 0.5%, so doing this is no big efficiency issue.
                         // TODO: Find out the underlying issue and create a better work-around
                         final int currentIndex = index;
                         final Transaction txCache;
                         try {
-                            txCache = new Transaction(params, tx.unsafeLitecoinSerialize());
+                            txCache = new Transaction(params, tx.unsafeClipcoinSerialize());
                         } catch (ProtocolException e1) {
                             throw new RuntimeException(e1);
                         }
@@ -305,7 +305,7 @@ public class FullPrunedBlockChain extends AbstractBlockChain {
                             // All of these copies are terribly ugly, however without them,
                             // I see some odd concurrency issues where scripts throw exceptions
                             // (mostly "Attempted OP_* on empty stack" or similar) when they shouldn't.
-                            // In my tests, total time spent in com.google.litecoin.core when
+                            // In my tests, total time spent in com.google.clipcoin.core when
                             // downloading the chain is < 0.5%, so doing this is no big efficiency issue.
                             // TODO: Find out the underlying issue and create a better work-around
                             // TODO: Thoroughly test that this fixes the issue like the non-StoredBlock version does

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -23,13 +23,13 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 
-import static com.google.litecoin.core.Utils.uint32ToByteStreamLE;
-import static com.google.litecoin.core.Utils.uint64ToByteStreamLE;
+import static com.google.clipcoin.core.Utils.uint32ToByteStreamLE;
+import static com.google.clipcoin.core.Utils.uint64ToByteStreamLE;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * A PeerAddress holds an IP address and port number representing the network location of
- * a peer in the Litecoin P2P network. It exists primarily for serialization purposes.
+ * a peer in the Clipcoin P2P network. It exists primarily for serialization purposes.
  */
 public class PeerAddress extends ChildMessage {
     private static final long serialVersionUID = 7501293709324197411L;
@@ -50,9 +50,9 @@ public class PeerAddress extends ChildMessage {
     /**
      * Construct a peer address from a serialized payload.
      * @param params NetworkParameters object.
-     * @param msg Litecoin protocol formatted byte array containing message content.
+     * @param msg Clipcoin protocol formatted byte array containing message content.
      * @param offset The location of the first msg byte within the array.
-     * @param protocolVersion Litecoin protocol version.
+     * @param protocolVersion Clipcoin protocol version.
      * @param parseLazy Whether to perform a full parse immediately or delay until a read is requested.
      * @param parseRetain Whether to retain the backing byte array for quick reserialization.  
      * If true and the backing byte array is invalidated due to modification of a field then 
@@ -98,7 +98,7 @@ public class PeerAddress extends ChildMessage {
     }
 
     @Override
-    protected void litecoinSerializeToStream(OutputStream stream) throws IOException {
+    protected void clipcoinSerializeToStream(OutputStream stream) throws IOException {
         if (protocolVersion >= 31402) {
             //TODO this appears to be dynamic because the client only ever sends out it's own address
             //so assumes itself to be up.  For a fuller implementation this needs to be dynamic only if

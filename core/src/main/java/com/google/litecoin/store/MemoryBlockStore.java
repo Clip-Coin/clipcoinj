@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.store;
+package com.google.clipcoin.store;
 
-import com.google.litecoin.core.*;
+import com.google.clipcoin.core.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Keeps {@link com.google.litecoin.core.StoredBlock}s in memory. Used primarily for unit testing.
+ * Keeps {@link com.google.clipcoin.core.StoredBlock}s in memory. Used primarily for unit testing.
  */
 public class MemoryBlockStore implements BlockStore {
     private Map<Sha256Hash, StoredBlock> blockMap;

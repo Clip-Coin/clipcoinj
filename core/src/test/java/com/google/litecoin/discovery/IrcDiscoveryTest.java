@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.discovery;
+package com.google.clipcoin.discovery;
 
 import org.junit.Test;
 

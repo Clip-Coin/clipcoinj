@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.store;
+package com.google.clipcoin.store;
 
-import com.google.litecoin.core.*;
+import com.google.clipcoin.core.*;
 import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -365,7 +365,7 @@ public class H2FullPrunedBlockStore implements FullPrunedBlockStore {
             s.setBytes(1, hashBytes);
             s.setBytes(2, storedBlock.getChainWork().toByteArray());
             s.setInt(3, storedBlock.getHeight());
-            s.setBytes(4, storedBlock.getHeader().unsafeLitecoinSerialize());
+            s.setBytes(4, storedBlock.getHeader().unsafeClipcoinSerialize());
             s.setBoolean(5, wasUndoable);
             s.executeUpdate();
             s.close();
@@ -415,7 +415,7 @@ public class H2FullPrunedBlockStore implements FullPrunedBlockStore {
                 bos.write((int) (0xFF & (numTxn >> 16)));
                 bos.write((int) (0xFF & (numTxn >> 24)));
                 for (Transaction tx : undoableBlock.getTransactions())
-                    tx.litecoinSerialize(bos);
+                    tx.clipcoinSerialize(bos);
                 transactions = bos.toByteArray();
             }
             bos.close();

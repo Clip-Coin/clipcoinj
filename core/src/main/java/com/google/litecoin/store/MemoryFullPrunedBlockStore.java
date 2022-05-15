@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.store;
+package com.google.clipcoin.store;
 
-import com.google.litecoin.core.*;
+import com.google.clipcoin.core.*;
 import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
@@ -92,7 +92,7 @@ class StoredTransaction implements Serializable {
 
     /**
      * A coinbase transaction is one that creates a new coin. They are the first transaction in each block and their
-     * value is determined by a formula that all implementations of Litecoin share. In 2011 the value of a coinbase
+     * value is determined by a formula that all implementations of Clipcoin share. In 2011 the value of a coinbase
      * transaction is 50 coins, but in future it will be less. A coinbase transaction is defined not only by its
      * position in a block but by the data in the inputs.
      */

@@ -1,4 +1,4 @@
-package com.google.litecoin.crypto;
+package com.google.clipcoin.crypto;
 
 /**
  * <p>Exception to provide the following to {@link EncrypterDecrypterOpenSSL}:</p>

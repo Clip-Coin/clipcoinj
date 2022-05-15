@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.examples;
+package com.google.clipcoin.examples;
 
-import com.google.litecoin.core.AbstractPeerEventListener;
-import com.google.litecoin.core.NetworkParameters;
-import com.google.litecoin.core.Peer;
-import com.google.litecoin.core.PeerGroup;
-import com.google.litecoin.discovery.DnsDiscovery;
-import com.google.litecoin.utils.BriefLogFormatter;
+import com.google.clipcoin.core.AbstractPeerEventListener;
+import com.google.clipcoin.core.NetworkParameters;
+import com.google.clipcoin.core.Peer;
+import com.google.clipcoin.core.PeerGroup;
+import com.google.clipcoin.discovery.DnsDiscovery;
+import com.google.clipcoin.utils.BriefLogFormatter;
 import com.google.common.collect.Lists;
 
 import javax.swing.*;

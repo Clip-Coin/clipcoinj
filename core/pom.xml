@@ -21,15 +21,15 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.google</groupId>
-        <artifactId>litecoinj-parent</artifactId>
+        <artifactId>clipcoinj-parent</artifactId>
         <version>0.85-SNAPSHOT</version>
     </parent>
 
     <groupId>com.google</groupId>
-    <artifactId>litecoinj</artifactId>
+    <artifactId>clipcoinj</artifactId>
 
-    <name>litecoinj</name>
-    <description>A Java Litecoin library</description>
+    <name>clipcoinj</name>
+    <description>A Java Clipcoin library</description>
 
     <profiles>
         <profile>
@@ -121,7 +121,7 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
-        <!-- litecoinj consumers are expected to provide their own SLF4J adapters
+        <!-- clipcoinj consumers are expected to provide their own SLF4J adapters
              such as logback, slf4j-log4j12, slf4j-jcl and so on
              see http://www.slf4j.org/faq.html -->
         <dependency>

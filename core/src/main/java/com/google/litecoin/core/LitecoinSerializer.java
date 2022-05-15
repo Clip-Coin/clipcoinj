@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
 
 import org.slf4j.Logger;
@@ -27,22 +27,22 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.google.litecoin.core.Utils.*;
+import static com.google.clipcoin.core.Utils.*;
 
 /**
- * <p>Methods to serialize and de-serialize messages to the Litecoin network format as defined in
- * <a href="https://en.litecoin.it/wiki/Protocol_specification">the protocol specification</a>.</p>
+ * <p>Methods to serialize and de-serialize messages to the Clipcoin network format as defined in
+ * <a href="https://en.clipcoin.it/wiki/Protocol_specification">the protocol specification</a>.</p>
  *
  * <p>To be able to serialize and deserialize new Message subclasses the following criteria needs to be met.</p>
  *
  * <ul>
  * <li>The proper Class instance needs to be mapped to it's message name in the names variable below</li>
  * <li>There needs to be a constructor matching: NetworkParameters params, byte[] payload</li>
- * <li>Message.litecoinSerializeToStream() needs to be properly subclassed</li>
+ * <li>Message.clipcoinSerializeToStream() needs to be properly subclassed</li>
  * </ul>
  */
-public class LitecoinSerializer {
-    private static final Logger log = LoggerFactory.getLogger(LitecoinSerializer.class);
+public class ClipcoinSerializer {
+    private static final Logger log = LoggerFactory.getLogger(ClipcoinSerializer.class);
     private static final int COMMAND_LEN = 12;
 
     private NetworkParameters params;
@@ -72,22 +72,22 @@ public class LitecoinSerializer {
     }
 
     /**
-     * Constructs a LitecoinSerializer with the given behavior.
+     * Constructs a ClipcoinSerializer with the given behavior.
      *
      * @param params           networkParams used to create Messages instances and termining packetMagic
      */
-    public LitecoinSerializer(NetworkParameters params) {
+    public ClipcoinSerializer(NetworkParameters params) {
         this(params, false, false);
     }
 
     /**
-     * Constructs a LitecoinSerializer with the given behavior.
+     * Constructs a ClipcoinSerializer with the given behavior.
      *
      * @param params           networkParams used to create Messages instances and termining packetMagic
      * @param parseLazy        deserialize messages in lazy mode.
      * @param parseRetain      retain the backing byte array of a message for fast reserialization.
      */
-    public LitecoinSerializer(NetworkParameters params, boolean parseLazy, boolean parseRetain) {
+    public ClipcoinSerializer(NetworkParameters params, boolean parseLazy, boolean parseRetain) {
         this.params = params;
         this.parseLazy = parseLazy;
         this.parseRetain = parseRetain;
@@ -99,7 +99,7 @@ public class LitecoinSerializer {
     public void serialize(Message message, OutputStream out) throws IOException {
         String name = names.get(message.getClass());
         if (name == null) {
-            throw new Error("LitecoinSerializer doesn't currently know how to serialize " + message.getClass());
+            throw new Error("ClipcoinSerializer doesn't currently know how to serialize " + message.getClass());
         }
 
         byte[] header = new byte[4 + COMMAND_LEN + 4 + 4 /* checksum */];
@@ -111,7 +111,7 @@ public class LitecoinSerializer {
             header[4 + i] = (byte) (name.codePointAt(i) & 0xFF);
         }
 
-        byte[] payload = message.litecoinSerialize();
+        byte[] payload = message.clipcoinSerialize();
 
         Utils.uint32ToByteArrayLE(payload.length, header, 4 + COMMAND_LEN);
 
@@ -149,7 +149,7 @@ public class LitecoinSerializer {
      * Reads a message from the given InputStream and returns it.
      */
     public Message deserialize(InputStream in) throws ProtocolException, IOException {
-        // A Litecoin protocol message has the following format.
+        // A Clipcoin protocol message has the following format.
         //
         //   - 4 byte magic number: 0xfabfb5da for the testnet or
         //                          0xf9beb4d9 for production
@@ -164,7 +164,7 @@ public class LitecoinSerializer {
         // Satoshi's implementation ignores garbage before the magic header bytes. We have to do the same because
         // sometimes it sends us stuff that isn't part of any message.
         seekPastMagicBytes(in);
-        LitecoinPacketHeader header = new LitecoinPacketHeader(in);
+        ClipcoinPacketHeader header = new ClipcoinPacketHeader(in);
         // Now try to read the whole message.
         return deserializePayload(header, in);
     }
@@ -173,15 +173,15 @@ public class LitecoinSerializer {
      * Deserializes only the header in case packet meta data is needed before decoding
      * the payload. This method assumes you have already called seekPastMagicBytes()
      */
-    public LitecoinPacketHeader deserializeHeader(InputStream in) throws ProtocolException, IOException {
-        return new LitecoinPacketHeader(in);
+    public ClipcoinPacketHeader deserializeHeader(InputStream in) throws ProtocolException, IOException {
+        return new ClipcoinPacketHeader(in);
     }
 
     /**
      * Deserialize payload only.  You must provide a header, typically obtained by calling
-     * {@link LitecoinSerializer#deserializeHeader}.
+     * {@link ClipcoinSerializer#deserializeHeader}.
      */
-    public Message deserializePayload(LitecoinPacketHeader header, InputStream in) throws ProtocolException, IOException {
+    public Message deserializePayload(ClipcoinPacketHeader header, InputStream in) throws ProtocolException, IOException {
         int readCursor = 0;
         byte[] payloadBytes = new byte[header.size];
         while (readCursor < payloadBytes.length - 1) {
@@ -302,13 +302,13 @@ public class LitecoinSerializer {
     }
 
 
-    public static class LitecoinPacketHeader {
+    public static class ClipcoinPacketHeader {
         public final byte[] header;
         public final String command;
         public final int size;
         public final byte[] checksum;
 
-        public LitecoinPacketHeader(InputStream in) throws ProtocolException, IOException {
+        public ClipcoinPacketHeader(InputStream in) throws ProtocolException, IOException {
             header = new byte[COMMAND_LEN + 4 + 4];
             int readCursor = 0;
             while (readCursor < header.length) {

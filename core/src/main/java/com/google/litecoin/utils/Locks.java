@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.utils;
+package com.google.clipcoin.utils;
 
 import com.google.common.util.concurrent.CycleDetectingLockFactory;
 
@@ -23,13 +23,13 @@ import java.util.concurrent.locks.ReentrantLock;
 import static com.google.common.base.Preconditions.checkState;
 
 /**
- * A wrapper around explicit lock creation that lets you control whether litecoinj performs cycle detection or not.
+ * A wrapper around explicit lock creation that lets you control whether clipcoinj performs cycle detection or not.
  */
 public class Locks {
 
     static {
         // Default policy goes here. If you want to change this, use one of the static methods before
-        // instantiating any litecoinj objects. The policy change will take effect only on new objects
+        // instantiating any clipcoinj objects. The policy change will take effect only on new objects
         // from that point onwards.
         throwOnLockCycles();
     }

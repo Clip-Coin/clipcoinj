@@ -1,6 +1,6 @@
 // Copyright 2012 Google Inc. All Rights Reserved.
 
-package com.google.litecoin.utils;
+package com.google.clipcoin.utils;
 
 import java.util.HashMap;
 import java.util.Map;

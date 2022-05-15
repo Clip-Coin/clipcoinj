@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
-import com.google.litecoin.utils.Locks;
+import com.google.clipcoin.utils.Locks;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

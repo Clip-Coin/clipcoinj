@@ -1,4 +1,4 @@
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
 import org.jboss.netty.channel.*;
 

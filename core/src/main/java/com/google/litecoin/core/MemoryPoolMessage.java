@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
 /**
  * The "mempool" message asks a remote peer to announce all transactions in its memory pool, possibly restricted by

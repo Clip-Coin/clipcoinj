@@ -16,12 +16,12 @@
  * 
  */
 
-package com.google.litecoin.uri;
+package com.google.clipcoin.uri;
 
-import com.google.litecoin.core.Address;
-import com.google.litecoin.core.AddressFormatException;
-import com.google.litecoin.core.NetworkParameters;
-import com.google.litecoin.core.Utils;
+import com.google.clipcoin.core.Address;
+import com.google.clipcoin.core.AddressFormatException;
+import com.google.clipcoin.core.NetworkParameters;
+import com.google.clipcoin.core.Utils;
 import com.google.common.base.Preconditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +35,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * <p>Provides a standard implementation of a Litecoin URI with support for the
+ * <p>Provides a standard implementation of a Clipcoin URI with support for the
  * following:</p>
  *
  * <ul>
@@ -48,8 +48,8 @@ import java.util.Map;
  * <p>The following input forms are accepted:</p>
  *
  * <ul>
- * <li>{@code litecoin:<address>}</li>
- * <li>{@code litecoin:<address>?<name1>=<value1>&<name2>=<value2>} with multiple
+ * <li>{@code clipcoin:<address>}</li>
+ * <li>{@code clipcoin:<address>?<name1>=<value1>&<name2>=<value2>} with multiple
  * additional name/value pairs</li>
  * </ul>
  *
@@ -75,13 +75,13 @@ import java.util.Map;
  * @author Andreas Schildbach (initial code)
  * @author Jim Burton (enhancements for MultiBit)
  * @author Gary Rowe (BIP21 support)
- * @see <a href="https://en.litecoin.it/wiki/BIP_0021">BIP 0021</a>
+ * @see <a href="https://en.clipcoin.it/wiki/BIP_0021">BIP 0021</a>
  */
-public class LitecoinURI {
+public class ClipcoinURI {
     /**
      * Provides logging for this class
      */
-    private static final Logger log = LoggerFactory.getLogger(LitecoinURI.class);
+    private static final Logger log = LoggerFactory.getLogger(ClipcoinURI.class);
 
     // Not worth turning into an enum
     public static final String FIELD_MESSAGE = "message";
@@ -89,7 +89,7 @@ public class LitecoinURI {
     public static final String FIELD_AMOUNT = "amount";
     public static final String FIELD_ADDRESS = "address";
 
-    public static final String LITECOIN_SCHEME = "litecoin";
+    public static final String CLIPCOIN_SCHEME = "clipcoin";
     private static final String ENCODED_SPACE_CHARACTER = "%20";
     private static final String AMPERSAND_SEPARATOR = "&";
     private static final String QUESTION_MARK_SEPARATOR = "?";
@@ -100,12 +100,12 @@ public class LitecoinURI {
     private final Map<String, Object> parameterMap = new LinkedHashMap<String, Object>();
 
     /**
-     * Constructs a new LitecoinURI from the given string. Can be for any network.
+     * Constructs a new ClipcoinURI from the given string. Can be for any network.
      *
      * @param uri The raw URI data to be parsed (see class comments for accepted formats)
-     * @throws LitecoinURIParseException if the URI is not syntactically or semantically valid.
+     * @throws ClipcoinURIParseException if the URI is not syntactically or semantically valid.
      */
-    public LitecoinURI(String uri) {
+    public ClipcoinURI(String uri) {
         this(null, uri);
     }
 
@@ -113,9 +113,9 @@ public class LitecoinURI {
      * @param params The network parameters that determine which network the URI is from, or null if you don't have
      *               any expectation about what network the URI is for and wish to check yourself.
      * @param input The raw URI data to be parsed (see class comments for accepted formats)
-     * @throws LitecoinURIParseException If the input fails Litecoin URI syntax and semantic checks.
+     * @throws ClipcoinURIParseException If the input fails Clipcoin URI syntax and semantic checks.
      */
-    public LitecoinURI(NetworkParameters params, String input) {
+    public ClipcoinURI(NetworkParameters params, String input) {
         // Basic validation
         Preconditions.checkNotNull(input);
         log.debug("Attempting to parse '{}' for {}", input, params == null ? "any" : params.getId());
@@ -125,31 +125,31 @@ public class LitecoinURI {
         try {
             uri = new URI(input);
         } catch (URISyntaxException e) {
-            throw new LitecoinURIParseException("Bad URI syntax", e);
+            throw new ClipcoinURIParseException("Bad URI syntax", e);
         }
 
-        // URI is formed as  litecoin:<address>?<query parameters>
-        // blockchain.info generates URIs of non-BIP compliant form litecoin://address?....
+        // URI is formed as  clipcoin:<address>?<query parameters>
+        // blockchain.info generates URIs of non-BIP compliant form clipcoin://address?....
         // We support both until Ben fixes his code.
         
-        // Remove the litecoin scheme.
+        // Remove the clipcoin scheme.
         // (Note: getSchemeSpecificPart() is not used as it unescapes the label and parse then fails.
-        // For instance with : litecoin:129mVqKUmJ9uwPxKJBnNdABbuaaNfho4Ha?amount=0.06&label=Tom%20%26%20Jerry
+        // For instance with : clipcoin:129mVqKUmJ9uwPxKJBnNdABbuaaNfho4Ha?amount=0.06&label=Tom%20%26%20Jerry
         // the & (%26) in Tom and Jerry gets interpreted as a separator and the label then gets parsed
         // as 'Tom ' instead of 'Tom & Jerry')
         String schemeSpecificPart;
-        if (input.startsWith("litecoin://")) {
-            schemeSpecificPart = input.substring("litecoin://".length());
-        } else if (input.startsWith("litecoin:")) {
-            schemeSpecificPart = input.substring("litecoin:".length());
+        if (input.startsWith("clipcoin://")) {
+            schemeSpecificPart = input.substring("clipcoin://".length());
+        } else if (input.startsWith("clipcoin:")) {
+            schemeSpecificPart = input.substring("clipcoin:".length());
         } else {
-            throw new LitecoinURIParseException("Unsupported URI scheme: " + uri.getScheme());
+            throw new ClipcoinURIParseException("Unsupported URI scheme: " + uri.getScheme());
         }
 
         // Split off the address from the rest of the query parameters.
         String[] addressSplitTokens = schemeSpecificPart.split("\\?");
         if (addressSplitTokens.length == 0 || "".equals(addressSplitTokens[0])) {
-            throw new LitecoinURIParseException("Missing address");
+            throw new ClipcoinURIParseException("Missing address");
         }
         String addressToken = addressSplitTokens[0];
 
@@ -162,7 +162,7 @@ public class LitecoinURI {
                 // Split into '<name>=<value>' tokens.
                 nameValuePairTokens = addressSplitTokens[1].split("&");
             } else {
-                throw new LitecoinURIParseException("Too many question marks in URI '" + uri + "'");
+                throw new ClipcoinURIParseException("Too many question marks in URI '" + uri + "'");
             }
         }
 
@@ -176,19 +176,19 @@ public class LitecoinURI {
      *                            separated by '=' e.g. 'amount=0.2')
      */
     private void parseParameters(NetworkParameters params, String addressToken, String[] nameValuePairTokens) {
-        // Attempt to parse the addressToken as a Litecoin address for this network
+        // Attempt to parse the addressToken as a Clipcoin address for this network
         try {
             Address address = new Address(params, addressToken);
             putWithValidation(FIELD_ADDRESS, address);
         } catch (final AddressFormatException e) {
-            throw new LitecoinURIParseException("Bad address", e);
+            throw new ClipcoinURIParseException("Bad address", e);
         }
         
         // Attempt to decode the rest of the tokens into a parameter map.
         for (String nameValuePairToken : nameValuePairTokens) {
             String[] tokens = nameValuePairToken.split("=");
             if (tokens.length != 2 || "".equals(tokens[0])) {
-                throw new LitecoinURIParseException("Malformed Litecoin URI - cannot parse name value pair '" +
+                throw new ClipcoinURIParseException("Malformed Clipcoin URI - cannot parse name value pair '" +
                         nameValuePairToken + "'");
             }
 
@@ -232,14 +232,14 @@ public class LitecoinURI {
      */
     private void putWithValidation(String key, Object value) {
         if (parameterMap.containsKey(key)) {
-            throw new LitecoinURIParseException("'" + key + "' is duplicated, URI is invalid");
+            throw new ClipcoinURIParseException("'" + key + "' is duplicated, URI is invalid");
         } else {
             parameterMap.put(key, value);
         }
     }
 
     /**
-     * @return The Litecoin Address from the URI
+     * @return The Clipcoin Address from the URI
      */
     public Address getAddress() {
         return (Address) parameterMap.get(FIELD_ADDRESS);
@@ -277,7 +277,7 @@ public class LitecoinURI {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder("LitecoinURI[");
+        StringBuilder builder = new StringBuilder("ClipcoinURI[");
         boolean first = true;
         for (Map.Entry<String, Object> entry : parameterMap.entrySet()) {
             if (first) {
@@ -291,33 +291,33 @@ public class LitecoinURI {
         return builder.toString();
     }
 
-    public static String convertToLitecoinURI(Address address, BigInteger amount, String label, String message) {
-        return convertToLitecoinURI(address.toString(), amount, label, message);
+    public static String convertToClipcoinURI(Address address, BigInteger amount, String label, String message) {
+        return convertToClipcoinURI(address.toString(), amount, label, message);
     }
 
     /**
-     * Simple Litecoin URI builder using known good fields.
+     * Simple Clipcoin URI builder using known good fields.
      * 
-     * @param address The Litecoin address
+     * @param address The Clipcoin address
      * @param amount The amount in nanocoins (decimal)
      * @param label A label
      * @param message A message
-     * @return A String containing the Litecoin URI
+     * @return A String containing the Clipcoin URI
      */
-    public static String convertToLitecoinURI(String address, BigInteger amount, String label, String message) {
+    public static String convertToClipcoinURI(String address, BigInteger amount, String label, String message) {
         Preconditions.checkNotNull(address);
         if (amount != null && amount.compareTo(BigInteger.ZERO) < 0) {
             throw new IllegalArgumentException("Amount must be positive");
         }
         
         StringBuilder builder = new StringBuilder();
-        builder.append(LITECOIN_SCHEME).append(":").append(address);
+        builder.append(CLIPCOIN_SCHEME).append(":").append(address);
         
         boolean questionMarkHasBeenOutput = false;
         
         if (amount != null) {
             builder.append(QUESTION_MARK_SEPARATOR).append(FIELD_AMOUNT).append("=");
-            builder.append(Utils.litecoinValueToPlainString(amount));
+            builder.append(Utils.clipcoinValueToPlainString(amount));
             questionMarkHasBeenOutput = true;
         }
         

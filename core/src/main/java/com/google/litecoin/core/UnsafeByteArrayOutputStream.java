@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

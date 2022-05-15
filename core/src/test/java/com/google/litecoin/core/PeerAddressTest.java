@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
 import org.junit.Test;
 import org.spongycastle.util.encoders.Hex;
@@ -27,18 +27,18 @@ public class PeerAddressTest
 {
     @Test
     public void testPeerAddressRoundtrip() throws Exception {
-        // copied verbatim from https://en.litecoin.it/wiki/Protocol_specification#Network_address
+        // copied verbatim from https://en.clipcoin.it/wiki/Protocol_specification#Network_address
         String fromSpec = "010000000000000000000000000000000000ffff0a000001208d";
         PeerAddress pa = new PeerAddress(NetworkParameters.prodNet(),
                 Hex.decode(fromSpec),0,0);
-        String reserialized = Utils.bytesToHexString(pa.litecoinSerialize());
+        String reserialized = Utils.bytesToHexString(pa.clipcoinSerialize());
         assertEquals(reserialized,fromSpec );
     }
 
     @Test
-    public void testLitecoinSerialize() throws Exception {
+    public void testClipcoinSerialize() throws Exception {
         PeerAddress pa = new PeerAddress(InetAddress.getByName(null), 8333, 0);
         assertEquals("000000000000000000000000000000000000ffff7f000001208d",
-                Utils.bytesToHexString(pa.litecoinSerialize()));
+                Utils.bytesToHexString(pa.clipcoinSerialize()));
     }
 }

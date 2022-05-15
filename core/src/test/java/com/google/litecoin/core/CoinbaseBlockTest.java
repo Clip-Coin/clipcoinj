@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -27,8 +27,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.google.litecoin.core.AbstractBlockChain.NewBlockType;
-import com.google.litecoin.core.Wallet.BalanceType;
+import com.google.clipcoin.core.AbstractBlockChain.NewBlockType;
+import com.google.clipcoin.core.Wallet.BalanceType;
 
 /**
  * Test that an example production coinbase transactions can be added to a wallet ok.

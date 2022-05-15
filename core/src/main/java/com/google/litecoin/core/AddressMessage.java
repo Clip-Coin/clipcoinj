@@ -1,4 +1,4 @@
-package com.google.litecoin.core;
+package com.google.clipcoin.core;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -76,15 +76,15 @@ public class AddressMessage extends Message {
     }
 
     /* (non-Javadoc)
-      * @see Message#litecoinSerializeToStream(java.io.OutputStream)
+      * @see Message#clipcoinSerializeToStream(java.io.OutputStream)
       */
     @Override
-    void litecoinSerializeToStream(OutputStream stream) throws IOException {
+    void clipcoinSerializeToStream(OutputStream stream) throws IOException {
         if (addresses == null)
             return;
         stream.write(new VarInt(addresses.size()).encode());
         for (PeerAddress addr : addresses) {
-            addr.litecoinSerialize(stream);
+            addr.clipcoinSerialize(stream);
         }
     }
 
