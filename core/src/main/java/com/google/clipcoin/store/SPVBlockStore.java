@@ -16,11 +16,8 @@
 
 package com.google.clipcoin.store;
 
-import com.google.clipcoin.core.*;
-import com.google.clipcoin.utils.Locks;
-import com.google.common.base.Preconditions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,9 +31,16 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.base.Preconditions.checkState;
+import com.google.clipcoin.core.Block;
+import com.google.clipcoin.core.NetworkParameters;
+import com.google.clipcoin.core.ProtocolException;
+import com.google.clipcoin.core.Sha256Hash;
+import com.google.clipcoin.core.StoredBlock;
+import com.google.clipcoin.utils.Locks;
+import com.google.common.base.Preconditions;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * An SPVBlockStore holds a limited number of block headers in a memory mapped ring buffer. With such a store, you
