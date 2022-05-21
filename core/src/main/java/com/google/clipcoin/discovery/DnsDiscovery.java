@@ -52,12 +52,9 @@ public class DnsDiscovery implements PeerDiscovery {
     private NetworkParameters netParams;
 
     public static final String[] defaultHosts = new String[]{
-            // "dnsseed.jointsecurityarea.org",
-            // "dnsseed.clipcointools.com",
-            // "dnsseed.clipcoinpool.org",
-            // "dnsseed.clip.xurious.com",
-            // "dnsseed.koin-project.com",
-            // "dnsseed.weminemnc.com",
+            "dnsseed.photmakers.com",
+            "dnsseed.saillook.com",
+            "dnsseed.photmaker.com",
     };
 
     /**
